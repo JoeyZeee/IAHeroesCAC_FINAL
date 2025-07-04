@@ -109,6 +109,7 @@ To honor and preserve the incredible stories of Iowa's veterans by providing a m
    
    Create a `.env` file in the `frontend` directory:
    ```env
+   # Firebase Configuration
    VITE_FIREBASE_API_KEY=your_firebase_api_key
    VITE_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
    VITE_FIREBASE_PROJECT_ID=your_firebase_project_id
@@ -116,8 +117,12 @@ To honor and preserve the incredible stories of Iowa's veterans by providing a m
    VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
    VITE_FIREBASE_APP_ID=your_app_id
    VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id
+
+   # Cloudinary Configuration
    VITE_CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
    VITE_CLOUDINARY_UPLOAD_PRESET=your_upload_preset
+
+   # EmailJS Configuration
    VITE_EMAILJS_PUBLIC_KEY=your_emailjs_public_key
    VITE_EMAILJS_SERVICE_ID=your_emailjs_service_id
    VITE_EMAILJS_TEMPLATE_ID=your_emailjs_template_id
