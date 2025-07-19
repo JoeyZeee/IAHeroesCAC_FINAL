@@ -167,11 +167,11 @@ export default function SubmitStory() {
   if (authLoading) {
     console.log("SubmitStory - Still loading auth state...");
     return (
-      <div className="flex-1 w-full bg-gradient-to-br from-green-800 to-green-600 text-black">
-        <div className="px-6 py-12 bg-gradient-to-br from-green-800 to-green-600 text-white">
+      <div className="flex-1 w-full bg-us-blue text-us-white">
+        <div className="px-6 py-12 bg-us-blue text-us-gold">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
-            <p className="text-green-100">Loading...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-us-gold mx-auto mb-4"></div>
+            <p className="text-us-gold">Loading...</p>
           </div>
         </div>
       </div>
@@ -182,21 +182,21 @@ export default function SubmitStory() {
   if (!user) {
     console.log("SubmitStory - User not authenticated, showing login required");
     return (
-      <div className="flex-1 w-full bg-white text-black">
-        <div className="px-6 py-12 bg-gradient-to-br from-[#f6fcf6] to-[#eaf7ea] text-[#2d5a27]">
+      <div className="flex-1 w-full bg-us-white text-us-blue">
+        <div className="px-6 py-12 bg-us-blue/5 text-us-blue">
           <div className="max-w-4xl mx-auto text-center">
             <div className="flex justify-center mb-6">
-              <svg className="w-16 h-16 text-[#2d5a27]" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-16 h-16 text-us-blue" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6z"/>
               </svg>
             </div>
-            <h1 className="text-4xl font-bold mb-4">Login Required</h1>
-            <p className="text-xl text-green-900 mb-8">
-              You must be logged in to submit a veteran story. Please log in to continue.
+            <h1 className="text-4xl font-bold mb-4 text-us-blue">Login Required</h1>
+            <p className="text-xl text-us-blue mb-8">
+              You must be logged in to submit a story. Please log in to continue.
             </p>
             <button 
               onClick={() => window.location.href = '/login'}
-              className="bg-[#2d5a27] text-white hover:bg-[#4a7c59] font-semibold px-8 py-3 rounded-lg transition text-lg"
+              className="bg-us-blue text-white font-semibold px-8 py-3 rounded-lg text-lg"
             >
               Go to Login
             </button>
@@ -225,7 +225,7 @@ export default function SubmitStory() {
           position: absolute;
           width: 4px;
           height: 4px;
-          background: rgba(255, 255, 255, 0.3);
+          background: rgba(245, 230, 178, 0.3);
           border-radius: 50%;
           pointer-events: none;
           animation: float 3s ease-in-out infinite;
@@ -251,19 +251,18 @@ export default function SubmitStory() {
       {/* Mouse animation particles */}
       <div className="particles" id="particles"></div>
 
-      <div className="submit-container flex-1 w-full bg-white text-black">
+      <div className="submit-container flex-1 w-full bg-us-blue text-us-white">
         {/* Hero Section */}
-        <div className="px-6 py-12 bg-gradient-to-br from-[#f6fcf6] to-[#eaf7ea] text-[#2d5a27]">
+        <div className="px-6 py-12 bg-us-blue text-us-gold">
           <div className="max-w-6xl mx-auto text-center">
             <div className="flex justify-center mb-4">
-              <svg className="w-16 h-16 text-[#2d5a27]" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-16 h-16 text-us-gold" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
               </svg>
             </div>
             <h1 className="text-4xl sm:text-5xl font-extrabold mb-4 drop-shadow">Submit a Veteran Story</h1>
-            <p className="text-xl text-green-900 mb-8 max-w-3xl mx-auto">
-              Help preserve the legacy of Iowa's veterans by sharing their stories. 
-              Every story matters and contributes to our collective history.
+            <p className="text-xl text-us-white mb-8 max-w-3xl mx-auto">
+              Share a story to honor an Iowa veteran. Your submission will help preserve their legacy for future generations.
             </p>
           </div>
         </div>
@@ -272,7 +271,7 @@ export default function SubmitStory() {
         <div className="px-6 py-12">
           <div className="max-w-4xl mx-auto">
             {success && (
-              <div className="mb-8 p-6 bg-green-50 border border-green-200 rounded-xl text-green-800">
+              <div className="mb-8 p-6 bg-us-gold border border-us-gold rounded-xl text-us-blue">
                 <div className="flex items-center mb-2">
                   <svg className="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
@@ -282,7 +281,7 @@ export default function SubmitStory() {
               </div>
             )}
             {error && (
-              <div className="mb-8 p-6 bg-red-50 border border-red-200 rounded-xl text-red-800">
+              <div className="mb-8 p-6 bg-us-red border border-us-red rounded-xl text-us-white">
                 <div className="flex items-center mb-2">
                   <svg className="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
@@ -295,22 +294,22 @@ export default function SubmitStory() {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Veteran's Name *</label>
+                  <label className="block text-sm font-semibold text-white mb-2">Veteran's Name *</label>
                   <input
                     type="text"
-                    className="w-full px-4 py-3 border border-green-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-[#eaf7ea] text-[#2d5a27] placeholder-green-700"
-                    placeholder="Enter veteran's full name"
+                    className="w-full px-4 py-3 border border-us-blue rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-us-blue focus:border-us-blue bg-us-white text-black placeholder-black"
+                    placeholder="Full name of the veteran"
                     value={veteranName}
                     onChange={e => setVeteranName(e.target.value)}
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Branch of Service *</label>
+                  <label className="block text-sm font-semibold text-white mb-2">Branch of Service *</label>
                   <input
                     type="text"
-                    className="w-full px-4 py-3 border border-green-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-[#eaf7ea] text-[#2d5a27] placeholder-green-700"
-                    placeholder="e.g., Army, Navy, Air Force"
+                    className="w-full px-4 py-3 border border-us-blue rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-us-blue focus:border-us-blue bg-us-white text-black placeholder-black"
+                    placeholder="e.g. Army, Navy, Air Force"
                     value={branch}
                     onChange={e => setBranch(e.target.value)}
                     required
@@ -320,21 +319,21 @@ export default function SubmitStory() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Conflict/War</label>
+                  <label className="block text-sm font-semibold text-white mb-2">Conflict / War</label>
                   <input
                     type="text"
-                    className="w-full px-4 py-3 border border-green-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-[#eaf7ea] text-[#2d5a27] placeholder-green-700"
-                    placeholder="e.g., WWII, Vietnam, Iraq"
+                    className="w-full px-4 py-3 border border-us-blue rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-us-blue focus:border-us-blue bg-us-white text-black placeholder-black"
+                    placeholder="e.g. WWII, Vietnam, Iraq"
                     value={conflict}
                     onChange={e => setConflict(e.target.value)}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Years of Service</label>
+                  <label className="block text-sm font-semibold text-white mb-2">Years Served</label>
                   <input
                     type="text"
-                    className="w-full px-4 py-3 border border-green-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-[#eaf7ea] text-[#2d5a27] placeholder-green-700"
-                    placeholder="e.g., 1942-1945"
+                    className="w-full px-4 py-3 border border-us-blue rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-us-blue focus:border-us-blue bg-us-white text-black placeholder-black"
+                    placeholder="e.g. 1944-1946"
                     value={years}
                     onChange={e => setYears(e.target.value)}
                   />
@@ -342,21 +341,21 @@ export default function SubmitStory() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Location</label>
+                <label className="block text-sm font-semibold text-white mb-2">Location (City, State)</label>
                 <input
                   type="text"
-                  className="w-full px-4 py-3 border border-green-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-[#eaf7ea] text-[#2d5a27] placeholder-green-700"
-                  placeholder="City or town in Iowa"
+                  className="w-full px-4 py-3 border border-us-blue rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-us-blue focus:border-us-blue bg-us-white text-black placeholder-black"
+                  placeholder="e.g. Des Moines, IA"
                   value={location}
                   onChange={e => setLocation(e.target.value)}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Veteran's Story *</label>
+                <label className="block text-sm font-semibold text-white mb-2">Story *</label>
                 <textarea
-                  className="w-full px-4 py-3 border border-green-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-[#eaf7ea] text-[#2d5a27] placeholder-green-700 min-h-[200px] resize-vertical"
-                  placeholder="Share the veteran's story, experiences, and memories..."
+                  className="w-full px-4 py-3 border border-us-blue rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-us-blue focus:border-us-blue bg-us-white text-black placeholder-black min-h-[120px]"
+                  placeholder="Share the veteran's story..."
                   value={story}
                   onChange={e => setStory(e.target.value)}
                   required
@@ -364,26 +363,27 @@ export default function SubmitStory() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Photo (Optional)</label>
+                <label className="block text-sm font-semibold text-white mb-2">Photo (optional)</label>
                 <button
+                  type="button"
                   onClick={handlePhotoUpload}
-                  className="bg-green-700 hover:bg-green-800 text-white font-semibold px-8 py-3 rounded-xl transition text-lg"
+                  className="bg-us-gold text-us-blue font-semibold px-4 py-2 rounded-lg shadow hover:bg-us-red hover:text-us-white transition"
                 >
-                  Upload Photo
+                  {photoURL ? "Change Photo" : "Upload Photo"}
                 </button>
                 {photoURL && (
-                  <div className="mt-4">
-                    <img src={photoURL} alt="Selected" className="max-w-full h-auto rounded-lg" />
+                  <div className="mt-2">
+                    <img src={photoURL} alt="Veteran" className="w-32 h-32 object-cover rounded-lg border border-us-gold" />
                   </div>
                 )}
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Your Name *</label>
+                  <label className="block text-sm font-semibold text-white mb-2">Your Name *</label>
                   <input
                     type="text"
-                    className="w-full px-4 py-3 border border-green-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-[#eaf7ea] text-[#2d5a27] placeholder-green-700"
+                    className="w-full px-4 py-3 border border-us-blue rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-us-blue focus:border-us-blue bg-us-white text-black placeholder-black"
                     placeholder="Your full name"
                     value={submittedName}
                     onChange={e => setSubmittedName(e.target.value)}
@@ -391,10 +391,10 @@ export default function SubmitStory() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Your Email *</label>
+                  <label className="block text-sm font-semibold text-white mb-2">Your Email *</label>
                   <input
                     type="email"
-                    className="w-full px-4 py-3 border border-green-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-[#eaf7ea] text-[#2d5a27] placeholder-green-700"
+                    className="w-full px-4 py-3 border border-us-blue rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-us-blue focus:border-us-blue bg-us-white text-black placeholder-black"
                     placeholder="your.email@example.com"
                     value={submittedBy}
                     onChange={e => setSubmittedBy(e.target.value)}
@@ -407,7 +407,7 @@ export default function SubmitStory() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="bg-green-700 hover:bg-green-800 disabled:bg-gray-400 text-white font-semibold px-8 py-4 rounded-xl transition text-lg min-w-[200px]"
+                  className="bg-us-red hover:bg-us-gold disabled:bg-us-gold text-us-white hover:text-us-blue font-semibold px-8 py-4 rounded-xl transition text-lg min-w-[200px]"
                 >
                   {loading ? "Submitting..." : "Submit Story"}
                 </button>

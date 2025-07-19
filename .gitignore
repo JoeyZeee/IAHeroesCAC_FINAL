@@ -1,0 +1,22 @@
+# Node modules and build
+node_modules/
+dist/
+build/
+
+# Environment and secrets
+.env
+.env.*
+*.env
+*.env.*
+*.json
+frontend/firebase-service-account.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Vite/React
+.vite 

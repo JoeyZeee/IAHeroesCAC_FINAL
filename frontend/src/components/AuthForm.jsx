@@ -169,7 +169,7 @@ export default function AuthForm() {
               <div className="mb-4">Logged in as <span className="font-bold text-green-900">{profile.name || user.email}</span></div>
               <div className="mb-4">Role: <span className="font-semibold text-green-900">{profile.role}</span></div>
               <div className="mb-6">Email: {user.email}</div>
-              <button onClick={handleLogout} className="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition">Logout</button>
+              <button onClick={handleLogout} className="bg-red-500 text-white px-6 py-2 rounded-lg">Logout</button>
             </div>
           </div>
         </div>
@@ -222,17 +222,17 @@ export default function AuthForm() {
 
       <div className="auth-container flex-1 w-full bg-white text-black">
         {/* Hero Section */}
-        <div className="px-6 py-12 bg-gradient-to-br from-[#f6fcf6] to-[#eaf7ea] text-[#2d5a27]">
+        <div className="px-6 py-12 bg-us-blue text-us-white">
           <div className="max-w-6xl mx-auto text-center">
             <div className="flex justify-center mb-4">
-              <svg className="w-16 h-16 text-[#2d5a27]" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-16 h-16 text-us-blue" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6z"/>
               </svg>
             </div>
             <h1 className="text-4xl sm:text-5xl font-extrabold mb-4 drop-shadow">
               {isRegister ? "Join IAHeroes" : "Welcome Back"}
             </h1>
-            <p className="text-xl text-green-900 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl text-us-white mb-8 max-w-3xl mx-auto">
               {isRegister 
                 ? "Create an account to submit stories, send thank you letters, and connect with Iowa's veterans."
                 : "Sign in to access your account and continue preserving the stories of Iowa's heroes."
@@ -244,14 +244,14 @@ export default function AuthForm() {
         {/* Form Section */}
         <div className="px-6 py-12">
           <div className="max-w-md mx-auto">
-            <div className="bg-white rounded-xl shadow-lg p-8 border border-green-100">
+            <div className="bg-us-white rounded-xl shadow-lg p-8 border border-us-blue">
               <div className="text-center mb-6">
                 <div className="flex justify-center mb-4">
-                  <svg className="w-12 h-12 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-12 h-12 text-us-blue" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                   </svg>
                 </div>
-                <h2 className="text-2xl font-bold text-green-900 mb-2">
+                <h2 className="text-2xl font-bold text-us-blue mb-2">
                   {isRegister ? "Create Account" : "Sign In"}
                 </h2>
                 <p className="text-gray-600">
@@ -275,7 +275,7 @@ export default function AuthForm() {
                           placeholder="Enter your full name"
                           value={name}
                           onChange={e => setName(e.target.value)}
-                          className="w-full pl-10 pr-3 py-3 border border-green-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent"
+                          className="w-full pl-10 pr-3 py-3 border border-us-blue rounded-lg focus:outline-none focus:ring-2 focus:ring-us-blue focus:border-transparent text-black placeholder-black"
                           required
                         />
                       </div>
@@ -291,7 +291,7 @@ export default function AuthForm() {
                         <select
                           value={role}
                           onChange={e => setRole(e.target.value)}
-                          className="w-full pl-10 pr-3 py-3 border border-green-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent appearance-none bg-white"
+                          className="w-full pl-10 pr-3 py-3 border border-us-blue rounded-lg focus:outline-none focus:ring-2 focus:ring-us-blue focus:border-transparent appearance-none bg-white text-black placeholder-black"
                           required
                         >
                           {roles.map(r => <option key={r.value} value={r.value}>{r.label}</option>)}
@@ -319,7 +319,7 @@ export default function AuthForm() {
                       placeholder="Enter your email"
                       value={email}
                       onChange={e => setEmail(e.target.value)}
-                      className="w-full pl-10 pr-3 py-3 border border-green-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent"
+                      className="w-full pl-10 pr-3 py-3 border border-us-blue rounded-lg focus:outline-none focus:ring-2 focus:ring-us-blue focus:border-transparent text-black placeholder-black"
                       required
                     />
                   </div>
@@ -338,7 +338,7 @@ export default function AuthForm() {
                       placeholder="Enter your password"
                       value={password}
                       onChange={e => setPassword(e.target.value)}
-                      className="w-full pl-10 pr-3 py-3 border border-green-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent"
+                      className="w-full pl-10 pr-3 py-3 border border-us-blue rounded-lg focus:outline-none focus:ring-2 focus:ring-us-blue focus:border-transparent text-black placeholder-black"
                       required
                     />
                   </div>
@@ -357,9 +357,9 @@ export default function AuthForm() {
 
                 <button 
                   type="submit" 
-                  className="w-full bg-green-700 text-white py-3 rounded-lg hover:bg-green-800 transition font-semibold"
+                  className="bg-us-blue text-us-white w-full py-3 rounded-lg font-semibold text-lg mt-4"
                 >
-                  {isRegister ? "Create Account" : "Sign In"}
+                  {isRegister ? "Sign Up" : "Sign In"}
                 </button>
 
                 <div className="relative my-6">
@@ -374,27 +374,19 @@ export default function AuthForm() {
                 <button
                   type="button"
                   onClick={handleGoogleSignIn}
-                  className="w-full bg-white border border-gray-300 text-gray-700 py-3 rounded-lg hover:bg-gray-50 transition font-semibold flex items-center justify-center gap-3"
+                  className="w-full flex items-center justify-center gap-2 border border-us-blue py-3 rounded-lg font-semibold text-us-blue bg-us-white"
                 >
-                  <svg className="w-5 h-5" viewBox="0 0 48 48">
-                    <g>
-                      <path fill="#4285F4" d="M24 9.5c3.54 0 6.7 1.22 9.19 3.22l6.85-6.85C36.68 2.36 30.77 0 24 0 14.82 0 6.71 5.82 2.69 14.09l7.98 6.19C12.13 13.16 17.57 9.5 24 9.5z"/>
-                      <path fill="#34A853" d="M46.1 24.55c0-1.64-.15-3.22-.42-4.74H24v9.01h12.39c-.53 2.85-2.13 5.26-4.54 6.89l7.02 5.46C43.93 36.13 46.1 30.8 46.1 24.55z"/>
-                      <path fill="#FBBC05" d="M9.67 28.28c-1.13-3.36-1.13-6.97 0-10.33l-7.98-6.19C-1.13 17.13-1.13 30.87 1.69 39.91l7.98-6.19z"/>
-                      <path fill="#EA4335" d="M24 48c6.48 0 11.92-2.13 15.89-5.81l-7.02-5.46c-1.95 1.31-4.45 2.09-7.17 2.09-6.43 0-11.87-3.66-14.33-8.98l-7.98 6.19C6.71 42.18 14.82 48 24 48z"/>
-                      <path fill="none" d="M0 0h48v48H0z"/>
-                    </g>
-                  </svg>
+                  <img src="/google.svg" alt="Google" className="w-6 h-6" />
                   Sign in with Google
                 </button>
 
                 <div className="text-center pt-4">
                   <button
                     type="button"
-                    className="text-green-700 hover:text-green-800 underline text-sm font-medium transition"
-                    onClick={() => setIsRegister(r => !r)}
+                    className="w-full bg-us-blue text-us-white font-semibold py-3 rounded-lg mt-4 hover:bg-us-blue/90 transition"
+                    onClick={() => setIsRegister(!isRegister)}
                   >
-                    {isRegister ? "Already have an account? Sign in" : "Need an account? Register"}
+                    {isRegister ? "Already have an account? Sign in" : "Don't have an account? Sign up"}
                   </button>
                 </div>
               </form>

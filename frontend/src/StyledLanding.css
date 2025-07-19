@@ -126,13 +126,13 @@
 .hero-icon {
   width: 60px;
   height: 60px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(24, 51, 58, 0.2);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid #18333A;
   transition: transform 0.3s ease;
 }
 
@@ -160,31 +160,31 @@
 }
 
 .btn-primary {
-  background: #218838 !important;
-  color: #fff !important;
-  border: 2px solid #218838 !important;
+  background: #B22234 !important;
+  color: #FFFFFF !important;
+  border: 2px solid #B22234 !important;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .btn-primary:hover {
-  background: #218838 !important;
-  color: #fff !important;
-  border: 2px solid #218838 !important;
+  background: #18333A !important;
+  color: #FFFFFF !important;
+  border: 2px solid #18333A !important;
   transform: scale(1.04);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+  box-shadow: 0 6px 20px rgba(24,51,58,0.18);
 }
 
 .btn-secondary {
-  background: white;
-  color: #4a7c59;
-  border: 2px solid #4a7c59;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  background: #FFFFFF;
+  color: #18333A;
+  border: 2px solid #B22234;
+  box-shadow: 0 4px 15px rgba(24,51,58,0.08);
 }
 
 .btn-secondary:hover {
-  background: #eaf7ea;
-  color: #2d5a27;
-  border-color: #2d5a27;
+  background: #18333A;
+  color: #FFFFFF;
+  border-color: #18333A;
   transform: translateY(-2px);
 }
 
@@ -202,12 +202,12 @@
 .impact-section {
   padding: 4rem 2rem;
   text-align: center;
-  background: linear-gradient(135deg, #f6fcf6 0%, #eaf7ea 100%);
+  background: #18333A;
 }
 
 .impact-title {
   font-size: 2.5rem;
-  color: #2d5a27;
+  color: #FFFFFF;
   margin-bottom: 3rem;
   font-weight: 700;
 }
@@ -221,36 +221,30 @@
 }
 
 .stat-card {
-  background: white;
+  background: #FFFFFF;
   padding: 2.5rem 1.5rem;
   border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: 1px solid rgba(74, 124, 89, 0.1);
+  box-shadow: 0 10px 30px rgba(24,51,58,0.1);
+  border: 1px solid #18333A;
 }
 
 .stat-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(74, 124, 89, 0.2);
+  box-shadow: 0 15px 40px rgba(24,51,58,0.2);
 }
 
 .stat-number {
   font-size: 3rem;
   font-weight: bold;
-  color: #4a7c59;
+  color: #B22234;
   margin-bottom: 0.5rem;
 }
 
 .stat-label {
   font-size: 1.2rem;
   font-weight: 600;
-  color: #2d5a27;
+  color: #18333A;
   margin-bottom: 0.5rem;
-}
-
-.stat-description {
-  color: #7f8c8d;
-  font-size: 0.95rem;
 }
 
 /* Get Started Section */
@@ -612,4 +606,27 @@
 .styled-landing .navbar .nav-links a:hover {
   color: #4a7c59 !important;
   background: none !important;
+} 
+
+/* Ensure homepage links and buttons stay white on hover */
+.styled-landing a:hover, .styled-landing button:hover {
+  color: #fff !important;
+} 
+
+/* Force all homepage links and buttons to keep their text white on hover, even inside feature-card, portal-card, or featured-story-card */
+.styled-landing a:hover,
+.styled-landing .feature-card a:hover,
+.styled-landing .portal-card a:hover,
+.styled-landing .featured-story-card:hover,
+.styled-landing .featured-story-card *:hover {
+  color: #fff !important;
+} 
+
+/* Force Portal Access button text and icon to stay white on hover */
+.styled-landing .portal-card a,
+.styled-landing .portal-card a *,
+.styled-landing .portal-card a:hover,
+.styled-landing .portal-card a:hover * {
+  color: #fff !important;
+  fill: #fff !important;
 } 

@@ -118,21 +118,21 @@ export default function ThankYouLetter() {
   if (!user) {
     console.log("ThankYouLetter - User not authenticated, showing login required");
     return (
-      <div className="flex-1 w-full bg-white text-black">
-        <div className="px-6 py-12 bg-gradient-to-br from-[#f6fcf6] to-[#eaf7ea] text-[#2d5a27]">
+      <div className="flex-1 w-full bg-us-white text-us-blue">
+        <div className="px-6 py-12 bg-us-blue/5 text-us-blue">
           <div className="max-w-4xl mx-auto text-center">
             <div className="flex justify-center mb-6">
-              <svg className="w-16 h-16 text-[#2d5a27]" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-16 h-16 text-us-blue" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6z"/>
               </svg>
             </div>
-            <h1 className="text-4xl font-bold mb-4">Login Required</h1>
-            <p className="text-xl text-green-900 mb-8">
+            <h1 className="text-4xl font-bold mb-4 text-us-blue">Login Required</h1>
+            <p className="text-xl text-us-blue mb-8">
               You must be logged in to send thank you letters. Please log in to continue.
             </p>
             <button 
               onClick={() => window.location.href = '/login'}
-              className="bg-[#2d5a27] text-white hover:bg-[#4a7c59] font-semibold px-8 py-3 rounded-lg transition text-lg"
+              className="bg-us-blue text-white font-semibold px-8 py-3 rounded-lg text-lg"
             >
               Go to Login
             </button>
@@ -184,17 +184,17 @@ export default function ThankYouLetter() {
         }
       `}</style>
 
-      <div className="thankyou-container flex-1 w-full bg-white text-black">
+      <div className="thankyou-container flex-1 w-full bg-us-blue text-white">
         {/* Hero Section */}
-        <div className="px-6 py-12 bg-gradient-to-br from-[#f6fcf6] to-[#eaf7ea] text-[#2d5a27]">
+        <div className="px-6 py-12 bg-us-blue text-white">
           <div className="max-w-6xl mx-auto text-center">
             <div className="flex justify-center mb-4">
-              <svg className="w-16 h-16 text-[#2d5a27]" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
               </svg>
             </div>
             <h1 className="text-4xl sm:text-5xl font-extrabold mb-4 drop-shadow">Send a Thank You Letter</h1>
-            <p className="text-xl text-green-900 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl text-white mb-8 max-w-3xl mx-auto">
               Express your gratitude to Iowa's veterans. Your words of thanks mean the world to those who served.
             </p>
           </div>
@@ -203,23 +203,23 @@ export default function ThankYouLetter() {
         {/* Form Section */}
         <div className="px-6 py-12">
           <div className="max-w-4xl mx-auto">
-            <div className="mb-8 p-6 bg-green-50 border border-green-200 rounded-xl">
+            <div className="mb-8 p-6 bg-us-blue border border-us-blue rounded-xl">
               <div className="flex items-center mb-2">
-                <svg className="w-6 h-6 mr-2 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 mr-2 text-white" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                 </svg>
-                <span className="font-semibold text-green-900">Important Note</span>
+                <span className="font-semibold text-white">Important Note</span>
               </div>
-              <p className="text-green-800">
+              <p className="text-white">
                 You can only send a thank you letter to veterans who have both a user account and a submitted story under the exact same name. If you don't see a veteran here, they may not have both.
               </p>
             </div>
 
             <form className="space-y-6">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Select Veteran *</label>
+                <label className="block text-sm font-semibold text-white mb-2">Select Veteran *</label>
                 <select
-                  className="w-full px-4 py-3 border border-green-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-[#eaf7ea] text-[#2d5a27]"
+                  className="w-full px-4 py-3 border border-us-blue rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-us-blue focus:border-us-blue bg-us-white text-black placeholder-black"
                   value={selectedVeteran}
                   onChange={e => setSelectedVeteran(e.target.value)}
                   disabled={loading}
@@ -232,9 +232,9 @@ export default function ThankYouLetter() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Your Letter *</label>
+                <label className="block text-sm font-semibold text-white mb-2">Your Letter *</label>
                 <textarea
-                  className="w-full px-4 py-3 border border-green-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-[#eaf7ea] text-[#2d5a27] placeholder-green-700 min-h-[200px] resize-vertical"
+                  className="w-full px-4 py-3 border border-us-blue rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-us-blue focus:border-us-blue bg-us-white text-black placeholder-black min-h-[200px] resize-vertical"
                   value={letter}
                   onChange={e => setLetter(e.target.value)}
                   placeholder="Write your thank you letter here..."
@@ -243,34 +243,30 @@ export default function ThankYouLetter() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-3">Send as:</label>
+                <label className="block text-sm font-semibold text-white mb-3">Send as:</label>
                 <div className="space-y-3">
-                  <label className="flex items-center gap-3 p-3 border border-green-200 rounded-lg hover:bg-green-50 cursor-pointer">
+                  <label className="flex items-center gap-3 p-3 border border-us-blue rounded-lg hover:bg-us-blue/80 cursor-pointer">
                     <input 
                       type="radio" 
-                      name="sendAs" 
-                      value="account" 
                       checked={sendAs === "account"} 
                       onChange={() => setSendAs("account")}
-                      className="text-green-600"
+                      className="text-white"
                     />
                     <div>
-                      <div className="font-medium">My account</div>
-                      <div className="text-sm text-gray-600">{user?.email || "Not logged in"}</div>
+                      <div className="font-medium text-white">My account</div>
+                      <div className="text-sm text-white">{user?.email || "Not logged in"}</div>
                     </div>
                   </label>
-                  <label className="flex items-center gap-3 p-3 border border-green-200 rounded-lg hover:bg-green-50 cursor-pointer">
+                  <label className="flex items-center gap-3 p-3 border border-us-blue rounded-lg hover:bg-us-blue/80 cursor-pointer">
                     <input 
                       type="radio" 
-                      name="sendAs" 
-                      value="anonymous" 
                       checked={sendAs === "anonymous"} 
                       onChange={() => setSendAs("anonymous")}
-                      className="text-green-600"
+                      className="text-white"
                     />
                     <div>
-                      <div className="font-medium">Anonymous</div>
-                      <div className="text-sm text-gray-600">Send without revealing your identity</div>
+                      <div className="font-medium text-white">Anonymous</div>
+                      <div className="text-sm text-white">Send without revealing your identity</div>
                     </div>
                   </label>
                 </div>
@@ -278,7 +274,7 @@ export default function ThankYouLetter() {
 
               <div className="text-center pt-6">
                 <button 
-                  className="bg-green-700 hover:bg-green-800 disabled:bg-gray-400 text-white font-semibold px-8 py-4 rounded-xl transition text-lg min-w-[200px]"
+                  className="bg-us-red hover:bg-us-red/90 disabled:bg-gray-400 text-white font-semibold px-8 py-4 rounded-xl transition text-lg min-w-[200px]"
                   onClick={handleSend} 
                   disabled={loading}
                 >
@@ -288,13 +284,14 @@ export default function ThankYouLetter() {
             </form>
 
             {status && (
-              <div className="mt-8 p-6 bg-green-50 border border-green-200 rounded-xl text-green-800">
+              <div className="mt-8 p-6 bg-us-blue border border-us-blue rounded-xl text-white">
                 <div className="flex items-center mb-2">
-                  <svg className="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                  <svg className="w-6 h-6 mr-2 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                   </svg>
-                  <span className="font-semibold text-lg">{status}</span>
+                  <span className="font-semibold text-white">Status</span>
                 </div>
+                <p className="text-white">{status}</p>
               </div>
             )}
           </div>

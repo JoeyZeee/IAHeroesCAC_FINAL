@@ -79,38 +79,38 @@ export default function Profile() {
   }, [user]);
 
   if (loading) return (
-    <div className="flex-1 w-full bg-gradient-to-br from-[#2d5a27] to-[#4a7c59] text-white">
-      <div className="px-6 py-12 bg-gradient-to-br from-[#2d5a27] to-[#4a7c59] text-white">
+    <div className="flex-1 w-full bg-us-blue text-us-white">
+      <div className="px-6 py-12 bg-us-blue text-us-white">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
-          <p className="text-green-100">Loading profile...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-us-white mx-auto mb-4"></div>
+          <p className="text-us-gold">Loading profile...</p>
         </div>
       </div>
     </div>
   );
   
   if (error) return (
-    <div className="flex-1 w-full bg-gradient-to-br from-red-900 via-red-800 to-red-700 text-white">
-      <div className="px-6 py-12 bg-gradient-to-br from-red-900 via-red-800 to-red-700 text-white">
+    <div className="flex-1 w-full bg-us-red text-us-white">
+      <div className="px-6 py-12 bg-us-red text-us-white">
         <div className="max-w-4xl mx-auto text-center">
           <div className="text-6xl mb-6">❌</div>
           <h1 className="text-4xl font-bold mb-4">Error</h1>
-          <p className="text-xl text-red-100 mb-8">{error}</p>
+          <p className="text-xl text-us-white mb-8">{error}</p>
         </div>
       </div>
     </div>
   );
   
   if (!user) return (
-    <div className="flex-1 w-full bg-gradient-to-br from-[#2d5a27] to-[#4a7c59] text-white">
-      <div className="px-6 py-12 bg-gradient-to-br from-[#2d5a27] to-[#4a7c59] text-white">
+    <div className="flex-1 w-full bg-us-blue text-us-white">
+      <div className="px-6 py-12 bg-us-blue text-us-white">
         <div className="max-w-4xl mx-auto text-center">
           <div className="text-6xl mb-6">🔒</div>
           <h1 className="text-4xl font-bold mb-4">Login Required</h1>
-          <p className="text-xl text-green-100 mb-8">Please log in to view your profile.</p>
+          <p className="text-xl text-us-gold mb-8">Please log in to view your profile.</p>
           <button 
             onClick={() => window.location.href = '/login'}
-            className="bg-white text-[#2d5a27] hover:bg-green-50 font-semibold px-8 py-3 rounded-lg transition text-lg"
+            className="bg-us-white text-us-blue hover:bg-us-gold font-semibold px-8 py-3 rounded-lg transition text-lg"
           >
             Go to Login
           </button>
@@ -120,25 +120,25 @@ export default function Profile() {
   );
   
   if (!profile) return (
-    <div className="flex-1 w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-white">
-      <div className="px-6 py-12 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-white">
+    <div className="flex-1 w-full bg-us-white text-us-blue">
+      <div className="px-6 py-12 bg-us-white text-us-blue">
         <div className="max-w-4xl mx-auto text-center">
           <div className="text-6xl mb-6">❓</div>
           <h1 className="text-4xl font-bold mb-4">No Profile Data</h1>
-          <p className="text-xl text-gray-100 mb-8">No profile data found.</p>
+          <p className="text-xl text-us-blue mb-8">No profile data found.</p>
         </div>
       </div>
     </div>
   );
 
   return (
-    <div className="flex-1 w-full bg-white text-black">
+    <div className="flex-1 w-full bg-us-white text-us-blue">
       {/* Hero Section */}
-      <div className="px-6 py-12 bg-gradient-to-br from-[#f6fcf6] to-[#eaf7ea] text-[#2d5a27]">
+      <div className="px-6 py-12 bg-us-blue text-us-gold">
         <div className="max-w-6xl mx-auto text-center">
           <div className="text-6xl mb-4">👤</div>
           <h1 className="text-4xl sm:text-5xl font-extrabold mb-4 drop-shadow">My Profile</h1>
-          <p className="text-xl text-green-900 mb-8 max-w-3xl mx-auto">
+          <p className="text-xl text-us-white mb-8 max-w-3xl mx-auto">
             Manage your account and view your activity on IAHeroes.
           </p>
         </div>
@@ -148,29 +148,29 @@ export default function Profile() {
       <div className="px-6 py-12">
         <div className="max-w-4xl mx-auto">
           {/* Profile Information */}
-          <div className="bg-white rounded-xl shadow-lg p-8 mb-8 border border-green-100">
-            <h2 className="text-2xl font-bold text-[#2d5a27] mb-6">Account Information</h2>
+          <div className="bg-us-gold rounded-xl shadow-lg p-8 mb-8 border border-us-blue">
+            <h2 className="text-2xl font-bold text-us-blue mb-6">Account Information</h2>
             <div className="space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-center p-4 bg-green-50 rounded-lg">
-                <span className="font-semibold text-gray-700 w-32 mb-2 sm:mb-0">Name:</span>
-                <span className="flex-1 text-gray-900">{profile.name || "Not set"}</span>
+              <div className="flex flex-col sm:flex-row sm:items-center p-4 bg-us-white rounded-lg">
+                <span className="font-semibold text-us-blue w-32 mb-2 sm:mb-0">Name:</span>
+                <span className="flex-1 text-us-blue">{profile.name || "Not set"}</span>
               </div>
-              <div className="flex flex-col sm:flex-row sm:items-center p-4 bg-green-50 rounded-lg">
-                <span className="font-semibold text-gray-700 w-32 mb-2 sm:mb-0">Email:</span>
-                <span className="flex-1 text-gray-900">{user.email}</span>
+              <div className="flex flex-col sm:flex-row sm:items-center p-4 bg-us-white rounded-lg">
+                <span className="font-semibold text-us-blue w-32 mb-2 sm:mb-0">Email:</span>
+                <span className="flex-1 text-us-blue">{user.email}</span>
               </div>
-              <div className="flex flex-col sm:flex-row sm:items-center p-4 bg-green-50 rounded-lg">
-                <span className="font-semibold text-gray-700 w-32 mb-2 sm:mb-0">User Type:</span>
+              <div className="flex flex-col sm:flex-row sm:items-center p-4 bg-us-white rounded-lg">
+                <span className="font-semibold text-us-blue w-32 mb-2 sm:mb-0">User Type:</span>
                 <span className="flex-1">
                   <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-                    profile.role === 'VETERAN' ? 'bg-green-100 text-green-800' :
-                    profile.role === 'EDUCATOR' ? 'bg-green-50 text-[#2d5a27]' :
-                    profile.role === 'MODERATOR' ? 'bg-purple-100 text-purple-800' :
-                    'bg-gray-100 text-gray-800'
+                    profile.role === 'VETERAN' ? 'bg-us-gold text-us-blue' :
+                    profile.role === 'EDUCATOR' ? 'bg-us-gold text-us-blue' :
+                    profile.role === 'MODERATOR' ? 'bg-us-gold text-us-red' :
+                    'bg-us-white text-us-blue'
                   }`}>
                     {profile.role}
                     {user && user.uid === "VFNN3G45mcaMAFFDmT3IwsZmWgp2" && (
-                      <span className="ml-2 font-bold text-purple-700">/ MODERATOR</span>
+                      <span className="ml-2 font-bold text-us-red">/ MODERATOR</span>
                     )}
                   </span>
                 </span>
@@ -179,28 +179,28 @@ export default function Profile() {
           </div>
 
           {/* Activity Statistics */}
-          <div className="bg-white rounded-xl shadow-lg p-8 border border-green-100">
-            <h2 className="text-2xl font-bold text-[#2d5a27] mb-6">Your Activity</h2>
+          <div className="bg-us-gold rounded-xl shadow-lg p-8 border border-us-blue">
+            <h2 className="text-2xl font-bold text-us-blue mb-6">Your Activity</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-              <div className="text-center p-6 bg-green-50 rounded-xl">
-                <div className="text-3xl font-bold text-[#2d5a27] mb-2">{stats.posts}</div>
-                <div className="text-sm font-semibold text-gray-700">Stories Shared</div>
+              <div className="text-center p-6 bg-us-white rounded-xl">
+                <div className="text-3xl font-bold text-us-red mb-2">{stats.posts}</div>
+                <div className="text-sm font-semibold text-us-blue">Stories Shared</div>
               </div>
-              <div className="text-center p-6 bg-green-50 rounded-xl">
-                <div className="text-3xl font-bold text-green-600 mb-2">{stats.commentsGiven}</div>
-                <div className="text-sm font-semibold text-gray-700">Comments Given</div>
+              <div className="text-center p-6 bg-us-white rounded-xl">
+                <div className="text-3xl font-bold text-us-red mb-2">{stats.commentsGiven}</div>
+                <div className="text-sm font-semibold text-us-blue">Comments Given</div>
               </div>
-              <div className="text-center p-6 bg-yellow-50 rounded-xl">
-                <div className="text-3xl font-bold text-yellow-600 mb-2">{stats.commentsReceived}</div>
-                <div className="text-sm font-semibold text-gray-700">Comments Received</div>
+              <div className="text-center p-6 bg-us-white rounded-xl">
+                <div className="text-3xl font-bold text-us-red mb-2">{stats.commentsReceived}</div>
+                <div className="text-sm font-semibold text-us-blue">Comments Received</div>
               </div>
-              <div className="text-center p-6 bg-purple-50 rounded-xl">
-                <div className="text-3xl font-bold text-purple-600 mb-2">{stats.reactionsGiven}</div>
-                <div className="text-sm font-semibold text-gray-700">Reactions Given</div>
+              <div className="text-center p-6 bg-us-white rounded-xl">
+                <div className="text-3xl font-bold text-us-red mb-2">{stats.reactionsGiven}</div>
+                <div className="text-sm font-semibold text-us-blue">Reactions Given</div>
               </div>
-              <div className="text-center p-6 bg-pink-50 rounded-xl">
-                <div className="text-3xl font-bold text-pink-600 mb-2">{stats.reactionsReceived}</div>
-                <div className="text-sm font-semibold text-gray-700">Reactions Received</div>
+              <div className="text-center p-6 bg-us-white rounded-xl">
+                <div className="text-3xl font-bold text-us-red mb-2">{stats.reactionsReceived}</div>
+                <div className="text-sm font-semibold text-us-blue">Reactions Received</div>
               </div>
             </div>
           </div>

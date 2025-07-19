@@ -95,8 +95,8 @@ To honor and preserve the incredible stories of Iowa's veterans by providing a m
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/JoeyZeee/IAHeroes.git
-   cd IAHeroes
+   git clone https://github.com/JoeyZeee/IAHeroesCAC_FINAL.git
+   cd IAHeroesCAC_FINAL
    ```
 
 2. **Install frontend dependencies**
@@ -117,15 +117,14 @@ To honor and preserve the incredible stories of Iowa's veterans by providing a m
    VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
    VITE_FIREBASE_APP_ID=your_app_id
    VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id
-
    # Cloudinary Configuration
    VITE_CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
    VITE_CLOUDINARY_UPLOAD_PRESET=your_upload_preset
-
    # EmailJS Configuration
    VITE_EMAILJS_PUBLIC_KEY=your_emailjs_public_key
    VITE_EMAILJS_SERVICE_ID=your_emailjs_service_id
    VITE_EMAILJS_TEMPLATE_ID=your_emailjs_template_id
+   # Contact Email
    VITE_CONTACT_EMAIL=your_contact_email
    ```
 

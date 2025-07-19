@@ -39,28 +39,28 @@ export default function Navbar() {
   return (
     <>
       <nav className="bg-white rounded-3xl shadow-md mx-auto my-6 max-w-screen-lg px-8 py-2 relative z-[100] flex items-center justify-between">
-        <Link to="/" className="text-[#2d5a27] font-bold text-xl no-underline hover:no-underline hover:text-[#2d5a27]">
+        <Link to="/" className="text-us-blue font-bold text-xl no-underline hover:no-underline hover:text-us-blue">
           IAHeroes
         </Link>
 
         <div className="flex-1 flex justify-center">
           <div className="flex gap-6 items-center">
-            <Link to="/" className="text-[#2d5a27] font-medium text-base no-underline hover:no-underline hover:text-[#2d5a27]">
+            <Link to="/" className="text-us-blue font-medium text-base no-underline hover:no-underline hover:text-us-blue">
               Home
             </Link>
-            <Link to="/submit" className="text-[#2d5a27] font-medium text-base no-underline hover:no-underline hover:text-[#2d5a27]">
+            <Link to="/submit" className="text-us-blue font-medium text-base no-underline hover:no-underline hover:text-us-blue">
               Submit Story
             </Link>
-            <Link to="/archive" className="text-[#2d5a27] font-medium text-base no-underline hover:no-underline hover:text-[#2d5a27]">
+            <Link to="/archive" className="text-us-blue font-medium text-base no-underline hover:no-underline hover:text-us-blue">
               Archive
             </Link>
-            <Link to="/timeline" className="text-[#2d5a27] font-medium text-base no-underline hover:no-underline hover:text-[#2d5a27]">
+            <Link to="/timeline" className="text-us-blue font-medium text-base no-underline hover:no-underline hover:text-us-blue">
               Timeline
             </Link>
-            <Link to="/thankyou" className="text-[#2d5a27] font-medium text-base no-underline hover:no-underline hover:text-[#2d5a27]">
+            <Link to="/thankyou" className="text-us-blue font-medium text-base no-underline hover:no-underline hover:text-us-blue">
               Thank You Letter
             </Link>
-            <Link to="/bookmarks" className="text-[#2d5a27] font-medium text-base no-underline hover:no-underline hover:text-[#2d5a27]">
+            <Link to="/bookmarks" className="text-us-blue font-medium text-base no-underline hover:no-underline hover:text-us-blue">
               Bookmarks{bookmarkCount > 0 && ` (${bookmarkCount})`}
             </Link>
           </div>
@@ -69,18 +69,18 @@ export default function Navbar() {
         <div className="flex items-center gap-4">
           {isLoggedIn ? (
             <>
-              <Link to="/profile" className="text-[#2d5a27] font-medium text-base no-underline hover:no-underline hover:text-[#2d5a27]">
+              <Link to="/profile" className="text-us-blue font-medium text-base no-underline hover:no-underline hover:text-us-blue">
                 Profile
               </Link>
               <button
                 onClick={handleLogout}
-                className="text-[#2d5a27] font-medium text-base no-underline hover:no-underline hover:text-[#2d5a27] bg-transparent border-none cursor-pointer"
+                className="text-us-blue font-medium text-base no-underline hover:no-underline hover:text-us-blue bg-transparent border-none cursor-pointer"
               >
                 Logout
               </button>
             </>
           ) : (
-            <Link to="/login" className="text-[#2d5a27] font-medium text-base no-underline hover:no-underline hover:text-[#2d5a27]">
+            <Link to="/login" className="text-us-blue font-medium text-base no-underline hover:no-underline hover:text-us-blue">
               Login
             </Link>
           )}
