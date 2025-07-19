@@ -271,7 +271,7 @@ export default function SubmitStory() {
         <div className="px-6 py-12">
           <div className="max-w-4xl mx-auto">
             {success && (
-              <div className="mb-8 p-6 bg-us-gold border border-us-gold rounded-xl text-us-blue">
+              <div className="mb-8 p-6 bg-us-gold border border-us-gold rounded-xl text-us-white">
                 <div className="flex items-center mb-2">
                   <svg className="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
