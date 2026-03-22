@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Analytics } from '@vercel/analytics/react'
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { FaUserGraduate, FaUserShield, FaShieldAlt, FaMedal, FaEye, FaTrash, FaFlag, FaPrayingHands, FaHeart } from 'react-icons/fa';
 import app from "./firebase";
