@@ -5,7 +5,7 @@ import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "./firebase";
 import { useAuth } from "./components/AuthContext";
 
-const MODERATOR_UID = "VFNN3G45mcaMAFFDmT3IwsZmWgp2"; // Actual moderator UID
+const MODERATOR_UID = "VFNN3G45mcaMAFFDmT3IwsZmWgp2";
 
 export default function Moderator() {
   const { user, userRole, loading } = useAuth();
@@ -22,71 +22,65 @@ export default function Moderator() {
     }
   }, [user]);
 
-  const fetchAll = async (options = { withLoading: true }) => {
-    if (options.withLoading) setDataLoading(true);
-    try {
-      // Pending stories
-      const storiesSnap = await getDocs(query(collection(db, "stories"), where("status", "==", "PENDING")));
-      setPendingStories(storiesSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-      // Flagged stories
-      const flaggedStoriesSnap = await getDocs(query(collection(db, "stories"), where("flagged", "==", true)));
-      setFlaggedStories(flaggedStoriesSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-      // Flagged comments (search all stories)
-      let allFlaggedComments = [];
-      const allStoriesSnap = await getDocs(collection(db, "stories"));
-      for (const storyDoc of allStoriesSnap.docs) {
-        const commentsSnap = await getDocs(query(collection(db, "stories", storyDoc.id, "comments"), where("flagged", "==", true)));
-        allFlaggedComments.push(...commentsSnap.docs.map(doc => ({ id: doc.id, ...doc.data(), storyId: storyDoc.id })));
-      }
-      setFlaggedComments(allFlaggedComments);
-      // Users
-      const usersSnap = await getDocs(collection(db, "users"));
-      setUsers(usersSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-    } catch (error) {
-      console.error("Error fetching moderator data:", error);
-    } finally {
-      if (options.withLoading) setDataLoading(false);
+  const fetchAll = async () => {
+    setDataLoading(true);
+    const storiesSnap = await getDocs(query(collection(db, "stories"), where("status", "==", "PENDING")));
+    setPendingStories(storiesSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+
+    const flaggedStoriesSnap = await getDocs(query(collection(db, "stories"), where("flagged", "==", true)));
+    setFlaggedStories(flaggedStoriesSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+
+    let allFlaggedComments = [];
+    const allStoriesSnap = await getDocs(collection(db, "stories"));
+    for (const storyDoc of allStoriesSnap.docs) {
+      const commentsSnap = await getDocs(query(collection(db, "stories", storyDoc.id, "comments"), where("flagged", "==", true)));
+      allFlaggedComments.push(...commentsSnap.docs.map(doc => ({ id: doc.id, ...doc.data(), storyId: storyDoc.id })));
     }
+    setFlaggedComments(allFlaggedComments);
+
+    const usersSnap = await getDocs(collection(db, "users"));
+    setUsers(usersSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+    setDataLoading(false);
   };
 
   const approveStory = async (id) => {
     await updateDoc(doc(db, "stories", id), { flagged: false });
-    await fetchAll({ withLoading: false });
+    fetchAll();
   };
   const rejectStory = async (id) => {
     await updateDoc(doc(db, "stories", id), { status: "REJECTED" });
-    await fetchAll({ withLoading: false });
+    fetchAll();
   };
   const deleteStory = async (id) => {
     await deleteDoc(doc(db, "stories", id));
-
-    // remove any bookmark entries for the deleted story
-    const q = query(collection(db, "bookmarks"));
-    const snap = await getDocs(q);
-    const removals = snap.docs
-      .map(docSnap => ({ id: docSnap.id, ...docSnap.data() }))
-      .filter(bookmark => bookmark.storyId === id)
-      .map(bookmark => deleteDoc(doc(db, "bookmarks", bookmark.id)));
-
-    await Promise.all(removals);
-    window.dispatchEvent(new Event('bookmarkCountChanged'));
-    await fetchAll({ withLoading: false });
+    fetchAll();
   };
-  const deleteComment = async (id, storyId) => {
-    await deleteDoc(doc(db, "stories", storyId, "comments", id));
-    await fetchAll({ withLoading: false });
+
+  // Cascade delete: remove all replies to a comment, then the comment itself
+  const deleteComment = async (commentId, storyId) => {
+    const allCommentsSnap = await getDocs(collection(db, "stories", storyId, "comments"));
+    const childIds = allCommentsSnap.docs
+      .map(d => ({ id: d.id, ...d.data() }))
+      .filter(c => c.parentId === commentId)
+      .map(c => c.id);
+    await Promise.all(childIds.map(childId =>
+      deleteDoc(doc(db, "stories", storyId, "comments", childId))
+    ));
+    await deleteDoc(doc(db, "stories", storyId, "comments", commentId));
+    fetchAll();
   };
+
   const unflagComment = async (id, storyId) => {
     await updateDoc(doc(db, "stories", storyId, "comments", id), { flagged: false });
-    await fetchAll({ withLoading: false });
+    fetchAll();
   };
   const banUser = async (id) => {
     await updateDoc(doc(db, "users", id), { banned: true });
-    await fetchAll({ withLoading: false });
+    fetchAll();
   };
   const unbanUser = async (id) => {
     await updateDoc(doc(db, "users", id), { banned: false });
-    await fetchAll({ withLoading: false });
+    fetchAll();
   };
   const resetPassword = async (email) => {
     await sendPasswordResetEmail(auth, email);
@@ -154,48 +148,106 @@ export default function Moderator() {
             User Management
           </button>
         </div>
-        {dataLoading ? <div>Loading...</div> : (
+
+        {dataLoading ? <div className="text-us-blue text-center">Loading...</div> : (
           <>
             {tab === "flaggedStories" && (
               <div>
                 <h2 className="text-xl font-bold mb-4 text-us-blue">Flagged Stories</h2>
-                {flaggedStories.length === 0 ? <div className="text-us-blue">No flagged stories.</div> : flaggedStories.map(story => (
-                  <div key={story.id} className="border rounded-xl p-4 mb-4 bg-us-white text-us-blue shadow">
-                    <div className="font-bold">{story.title || story.veteranName || "Untitled"}</div>
-                    <div className="mb-2 text-us-blue">{story.story}</div>
-                    <a href={`/archive/${story.id}`} target="_blank" rel="noopener noreferrer" className="text-us-blue underline mr-4">View Story</a>
-                    <button className="mr-2 border border-us-gold text-us-gold rounded px-3 py-1 text-xs font-semibold transition-colors duration-150 hover:bg-us-gold hover:text-us-white focus:outline-none focus:ring-2 focus:ring-us-gold" onClick={()=>approveStory(story.id)}>Approve/Unflag</button>
-                    <button className="bg-us-red text-us-white rounded px-3 py-1 text-xs font-semibold transition-colors duration-150 hover:bg-red-600" onClick={()=>deleteStory(story.id)}>Delete</button>
+                {flaggedStories.length === 0
+                  ? <div className="text-us-blue">No flagged stories.</div>
+                  : flaggedStories.map(story => (
+                  <div key={story.id} className="border border-gray-300 rounded-xl p-4 mb-4 shadow" style={{backgroundColor: '#ffffff'}}>
+                    <div className="font-bold mb-1" style={{color: '#000000'}}>{story.title || story.veteranName || "Untitled"}</div>
+                    <div className="text-sm mb-3 line-clamp-3" style={{color: '#000000'}}>{story.story}</div>
+                    <div className="flex items-center gap-3 flex-wrap">
+                      <a
+                        href={`/archive/${story.id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-us-blue underline text-sm"
+                      >
+                        View Story
+                      </a>
+                      <button
+                        className="bg-us-blue text-us-white rounded px-3 py-1 text-xs font-semibold"
+                        onClick={() => approveStory(story.id)}
+                      >
+                        Approve / Unflag
+                      </button>
+                      <button
+                        className="bg-us-red text-us-white rounded px-3 py-1 text-xs font-semibold"
+                        onClick={() => deleteStory(story.id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
             )}
+
             {tab === "flaggedComments" && (
               <div>
                 <h2 className="text-xl font-bold mb-4 text-us-blue">Flagged Comments</h2>
-                {flaggedComments.length === 0 ? <div className="text-us-blue">No flagged comments.</div> : flaggedComments.map(comment => (
-                  <div key={comment.id} className="border rounded-xl p-4 mb-4 bg-us-white text-us-blue shadow">
-                    <div className="mb-2 text-us-blue">{comment.text}</div>
-                    <a href={`/archive/${comment.storyId}`} target="_blank" rel="noopener noreferrer" className="text-us-blue underline mr-4">View Story</a>
-                    <button className="mr-2 border border-us-gold text-us-gold rounded px-3 py-1 text-xs font-semibold transition-colors duration-150 hover:bg-us-gold hover:text-us-white focus:outline-none focus:ring-2 focus:ring-us-gold" onClick={()=>unflagComment(comment.id, comment.storyId)}>Unflag</button>
-                    <button className="bg-us-red text-us-white rounded px-3 py-1 text-xs font-semibold transition-colors duration-150 hover:bg-red-600" onClick={()=>deleteComment(comment.id, comment.storyId)}>Delete</button>
+                {flaggedComments.length === 0
+                  ? <div className="text-us-blue">No flagged comments.</div>
+                  : flaggedComments.map(comment => (
+                  <div key={comment.id} className="border border-gray-300 rounded-xl p-4 mb-4 shadow" style={{backgroundColor: '#ffffff', color: '#000000'}}>
+                    <div className="text-sm mb-1" style={{color: '#000000'}}>
+                      <span className="font-semibold" style={{color: '#000000'}}>{comment.userName || "Anonymous"}:</span> {comment.text}
+                    </div>
+                    <div className="text-xs mb-3" style={{color: '#555555'}}>Story ID: {comment.storyId}</div>
+                    <div className="flex items-center gap-3 flex-wrap">
+                      <a
+                        href={`/archive/${comment.storyId}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-us-blue underline text-sm"
+                      >
+                        View Story
+                      </a>
+                      <button
+                        className="bg-us-blue text-us-white rounded px-3 py-1 text-xs font-semibold"
+                        onClick={() => unflagComment(comment.id, comment.storyId)}
+                      >
+                        Unflag
+                      </button>
+                      <button
+                        className="bg-us-red text-us-white rounded px-3 py-1 text-xs font-semibold"
+                        onClick={() => deleteComment(comment.id, comment.storyId)}
+                      >
+                        Delete (+ replies)
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
             )}
+
             {tab === "users" && (
               <div>
                 <h2 className="text-xl font-bold mb-4 text-us-blue">User Management</h2>
-                {users.length === 0 ? <div className="text-us-blue">No users found.</div> : users.map(u => (
-                  <div key={u.id} className="border rounded-xl p-4 mb-4 flex flex-col md:flex-row md:items-center md:justify-between bg-us-white text-us-blue shadow">
+                {users.length === 0
+                  ? <div className="text-us-blue">No users found.</div>
+                  : users.map(u => (
+                  <div key={u.id} className="border border-gray-300 rounded-xl p-4 mb-4 flex flex-col md:flex-row md:items-center md:justify-between shadow" style={{backgroundColor: '#ffffff'}}>
                     <div>
-                      <div className="font-bold text-us-blue">{u.email}</div>
-                      <div className="text-us-blue">Role: {u.role}</div>
-                      {u.banned && <div className="text-us-red font-bold">BANNED</div>}
+                      <div className="font-bold" style={{color: '#000000'}}>{u.email}</div>
+                      <div className="text-sm" style={{color: '#000000'}}>Role: {u.role}</div>
+                      {u.banned && <div className="text-us-red font-bold text-sm mt-1">BANNED</div>}
                     </div>
                     <div className="flex gap-2 mt-2 md:mt-0">
-                      {!u.banned ? <button className="border border-us-red bg-us-red text-us-white rounded px-3 py-1 text-xs font-semibold transition-colors duration-150 hover:bg-us-red hover:text-us-white focus:outline-none focus:ring-2 focus:ring-us-red" onClick={()=>banUser(u.id)}>Ban</button> : <button className="border border-us-red bg-us-white text-us-red rounded px-3 py-1 text-xs font-semibold transition-colors duration-150 hover:bg-us-red hover:text-us-white focus:outline-none focus:ring-2 focus:ring-us-red" onClick={()=>unbanUser(u.id)}>Unban</button>}
-                      <button className="border border-us-red bg-us-red text-us-white rounded px-3 py-1 text-xs font-semibold transition-colors duration-150 hover:bg-us-red hover:text-us-white focus:outline-none focus:ring-2 focus:ring-us-red" onClick={()=>resetPassword(u.email)}>Reset Password</button>
+                      {!u.banned
+                        ? <button className="bg-us-red text-us-white rounded px-3 py-1 text-xs font-semibold" onClick={() => banUser(u.id)}>Ban</button>
+                        : <button className="border border-us-red text-us-red rounded px-3 py-1 text-xs font-semibold" onClick={() => unbanUser(u.id)}>Unban</button>
+                      }
+                      <button
+                        className="bg-us-blue text-us-white rounded px-3 py-1 text-xs font-semibold"
+                        onClick={() => resetPassword(u.email)}
+                      >
+                        Reset Password
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -206,4 +258,4 @@ export default function Moderator() {
       </div>
     </div>
   );
-} 
+}
