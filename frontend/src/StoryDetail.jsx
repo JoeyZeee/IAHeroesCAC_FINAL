@@ -4,14 +4,12 @@ import { db, auth } from "./firebase";
 import { doc, getDoc, collection, addDoc, onSnapshot, setDoc, increment, updateDoc, query, orderBy } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { useAuth } from "./components/AuthContext";
-import { FaEye, FaFlag, FaPrayingHands, FaHeart, FaStar } from 'react-icons/fa';
+import { FaEye, FaFlag, FaPrayingHands, FaHeart, FaStar, FaThumbsUp } from 'react-icons/fa';
 
-// SVG/Icon Components for reactions
 const ReactionIcons = {
-  flag: ({ className = "w-6 h-6" }) => <FaFlag className={className} />,
   prayer: ({ className = "w-6 h-6" }) => <FaPrayingHands className={className} />,
   love: ({ className = "w-6 h-6" }) => <FaHeart className={className} />,
-  star: ({ className = "w-6 h-6" }) => <FaStar className={className} />,
+  support: ({ className = "w-6 h-6" }) => <FaThumbsUp className={className} />,
 };
 
 // Medal/Star icon for the Veteran Story header
@@ -30,13 +28,13 @@ const FlagIcon = ({ className = "w-5 h-5" }) => (
   </svg>
 );
 
-const REACTIONS = ["flag", "prayer", "love", "star"];
-const reactionLabels = { flag: "Flag", prayer: "Prayer", love: "Love", star: "Star" };
+const REACTIONS = ["prayer", "love", "support"];
+const reactionLabels = { prayer: "Prayer", love: "Love", support: "Support" };
 const legacyReactionMappings = {
-  "\u{1F1FA}\u{1F1F8}": "flag",
+  //"\u{1F1FA}\u{1F1F8}": "flag",
   "\u{1F64F}": "prayer",
   "\u{2764}\u{FE0F}": "love",
-  "\u{2B50}\u{FE0F}": "star"
+  "\u{1F44D}": "support"
 };
 const MODERATOR_UID = "VFNN3G45mcaMAFFDmT3IwsZmWgp2"; // Actual moderator UID
 
