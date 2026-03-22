@@ -219,7 +219,7 @@ function StyledLanding() {
         </div>
       </section>
 
-      <footer className="w-full text-center text-us-white py-6 mt-8">© 2025 Joey Zambreno. Created for the purpose of preserving and sharing the stories of Iowa's veterans.</footer>
+      <footer className="w-full text-center text-us-white py-6 mt-8">© 2026 Joey Zambreno. Created for the purpose of preserving and sharing the stories of Iowa's veterans.</footer>
     </div>
   );
 }
