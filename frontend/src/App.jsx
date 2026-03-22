@@ -123,7 +123,7 @@ function MainLayout({ children }) {
         <div className="flex-1 flex flex-col">{children}</div>
       </main>
       <footer className="w-full left-0 bg-us-blue text-us-white text-center py-3 text-sm shadow-md z-50">
-        © 2025 Joey Zambreno. Created for the purpose of preserving and sharing the stories of Iowa's veterans.
+        © 2026 Joey Zambreno. Created for the purpose of preserving and sharing the stories of Iowa's veterans.
       </footer>
     </>
   );
