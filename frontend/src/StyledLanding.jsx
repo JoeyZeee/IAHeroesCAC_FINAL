@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { collection, getDocs, query, orderBy, doc, deleteDoc } from "firebase/firestore";
 import { db, auth } from "./firebase";
 import { signOut } from "firebase/auth";
 import Navbar from "./components/Navbar";
 import { FaRegFileAlt, FaPen, FaHeart, FaSearch, FaGraduationCap, FaShieldAlt } from 'react-icons/fa';
-
-const CARD_EMOJIS = ["🇺🇸", "🙏", "❤️"];
 
 const formatViewCount = (count) => {
   if (count === 0) return "No views yet";
@@ -53,13 +51,30 @@ function StyledLanding() {
         const lettersSnap = await getDocs(collection(db, "letters"));
         
         const veteranUsers = usersSnap.docs
-          .map(doc => doc.data())
+          .map(doc => ({ id: doc.id, ...doc.data() }))
           .filter(user => user.role === "VETERAN");
+
+        const veteranIds = new Set(veteranUsers.map(user => user.id));
+
+        let validLettersCount = 0;
+        for (const letterDoc of lettersSnap.docs) {
+          const letterData = letterDoc.data();
+          if (letterData && letterData.veteranUserId && veteranIds.has(letterData.veteranUserId)) {
+            validLettersCount += 1;
+          } else {
+            // prune orphan letter entries
+            try {
+              await deleteDoc(doc(db, "letters", letterDoc.id));
+            } catch (delErr) {
+              console.warn("Failed to prune orphan letter doc:", letterDoc.id, delErr);
+            }
+          }
+        }
 
         setStats({
           stories: storiesSnap.size,
           veterans: veteranUsers.length,
-          letters: lettersSnap.size
+          letters: validLettersCount
         });
       } catch (error) {
         console.error("Error fetching stats:", error);
