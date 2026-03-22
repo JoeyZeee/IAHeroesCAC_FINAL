@@ -987,22 +987,21 @@ export default function App() {
   return (
     <Router>
       <AuthProvider>
-        <Analytics>
-          <Routes>
-            <Route path="/" element={<StyledLanding />} />
-            <Route path="/submit" element={<MainLayout><SubmitStory /></MainLayout>} />
-            <Route path="/archive" element={<MainLayout><Archive /></MainLayout>} />
-            <Route path="/archive/:id" element={<MainLayout><StoryDetail /></MainLayout>} />
-            <Route path="/thankyou" element={<MainLayout><ThankYouLetter /></MainLayout>} />
-            <Route path="/login" element={<MainLayout><AuthForm /></MainLayout>} />
-            <Route path="/profile" element={<MainLayout><Profile /></MainLayout>} />
-            <Route path="/educator" element={<MainLayout><Educator /></MainLayout>} />
-            <Route path="/veteran" element={<MainLayout><Veteran /></MainLayout>} />
-            <Route path="/bookmarks" element={<MainLayout><Bookmarks /></MainLayout>} />
-            <Route path="/moderator" element={<MainLayout><Moderator /></MainLayout>} />
-            <Route path="/timeline" element={<MainLayout><Timeline /></MainLayout>} />
-          </Routes>
-        </Analytics>
+        <Analytics />
+        <Routes>
+          <Route path="/" element={<StyledLanding />} />
+          <Route path="/submit" element={<MainLayout><SubmitStory /></MainLayout>} />
+          <Route path="/archive" element={<MainLayout><Archive /></MainLayout>} />
+          <Route path="/archive/:id" element={<MainLayout><StoryDetail /></MainLayout>} />
+          <Route path="/thankyou" element={<MainLayout><ThankYouLetter /></MainLayout>} />
+          <Route path="/login" element={<MainLayout><AuthForm /></MainLayout>} />
+          <Route path="/profile" element={<MainLayout><Profile /></MainLayout>} />
+          <Route path="/educator" element={<MainLayout><Educator /></MainLayout>} />
+          <Route path="/veteran" element={<MainLayout><Veteran /></MainLayout>} />
+          <Route path="/bookmarks" element={<MainLayout><Bookmarks /></MainLayout>} />
+          <Route path="/moderator" element={<MainLayout><Moderator /></MainLayout>} />
+          <Route path="/timeline" element={<MainLayout><Timeline /></MainLayout>} />
+        </Routes>
       </AuthProvider>
     </Router>
   );
