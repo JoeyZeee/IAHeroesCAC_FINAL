@@ -3,7 +3,7 @@ from firebase_admin import credentials, auth, firestore
 from collections import defaultdict
 
 # Path to your service account key JSON (same as used by your existing cleanup scripts)
-SERVICE_ACCOUNT_PATH = r'C:\Users\jzamb\IAHeroesCAC_FINAL\IAHeroesCAC_FINAL\frontend\iaheroesv2-firebase-adminsdk-fbsvc-afa7db3fdb.json'
+SERVICE_ACCOUNT_PATH = r''
 
 # 1) Specify the email addresses to keep (all others in Auth will be deleted)
 keep_emails = [
