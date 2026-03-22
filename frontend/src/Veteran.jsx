@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { auth, db } from "./firebase";
-import { doc, getDoc, collection, getDocs, query, where, orderBy } from "firebase/firestore";
+import { doc, getDoc, collection, getDocs, query, where, orderBy, updateDoc } from "firebase/firestore";
 
 const RESOURCES = [
   { name: "VA Benefits", url: "https://www.va.gov/" },
@@ -60,7 +60,9 @@ export default function Veteran() {
           const lettersData = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
           console.log("Found letters:", lettersData);
           console.log("Letters data details:", lettersData.map(l => ({ id: l.id, veteranUserId: l.veteranUserId, veteranName: l.veteranName, fromUser: l.fromUser })));
-          setLetters(lettersData);
+          // Filter out cleared letters
+          const activeLetters = lettersData.filter(letter => !letter.cleared);
+          setLetters(activeLetters);
         } catch (error) {
           console.error("Error fetching letters:", error);
           setLetters([]);
@@ -69,6 +71,17 @@ export default function Veteran() {
       fetchLetters();
     }
   }, [tab, user]);
+
+  const clearLetter = async (letterId) => {
+    try {
+      await updateDoc(doc(db, "letters", letterId), { cleared: true });
+      // Remove from local state
+      setLetters(prev => prev.filter(letter => letter.id !== letterId));
+    } catch (error) {
+      console.error("Error clearing letter:", error);
+      alert("Failed to clear letter");
+    }
+  };
 
   useEffect(() => {
     // Mouse animation effect
@@ -257,11 +270,21 @@ export default function Veteran() {
             ) : (
               <ul className="space-y-4">
                 {letters.map(letter => (
-                  <li key={letter.id} className="bg-us-gold border border-us-blue rounded shadow p-4 cursor-pointer hover:bg-us-gold transition" onClick={() => { setSelectedLetter(letter); setModalOpen(true); }}>
+                  <li key={letter.id} className="bg-us-gold border border-us-blue rounded shadow p-4 cursor-pointer hover:bg-us-gold transition relative" onClick={() => { setSelectedLetter(letter); setModalOpen(true); }}>
                     <div className="text-sm text-us-blue mb-1">
                       From: {letter.fromUser || "Anonymous"} | {letter.createdAt?.toDate ? letter.createdAt.toDate().toLocaleString() : ""}
                     </div>
                     <div className="text-us-blue text-lg whitespace-pre-line">{letter.letter}</div>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        clearLetter(letter.id);
+                      }}
+                      className="absolute top-2 right-2 bg-us-red text-us-white px-2 py-1 rounded text-sm font-semibold hover:bg-red-600 transition-colors"
+                      title="Clear this letter"
+                    >
+                      Clear
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -277,7 +300,7 @@ export default function Veteran() {
                 className="absolute top-0 right-0 m-6 w-16 h-16 rounded-xl bg-us-red flex items-center justify-center"
                 style={{ transition: 'none' }}
               >
-                <svg className="w-8 h-8 text-us-blue" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                <svg className="w-8 h-8 text-us-white" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 6l12 12M6 18L18 6" />
                 </svg>
               </button>
