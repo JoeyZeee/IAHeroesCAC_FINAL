@@ -193,7 +193,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Author
 
 **Joey Zambreno**
-- Created for the purpose of preserving and sharing the stories of Iowa's veterans - made for the 2025 Congressional App Challenge Competition
+- Created for the purpose of preserving and sharing the stories of Iowa's veterans - made for the 2026 Congressional App Challenge Competition
 - Dedicated to honoring our heroes and their sacrifices
 
 **IAHeroes** - Preserving the legacy of Iowa's veterans, one story at a time.
