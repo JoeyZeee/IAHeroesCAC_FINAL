@@ -4,42 +4,14 @@ import { db, auth } from "./firebase";
 import { doc, getDoc, collection, addDoc, onSnapshot, setDoc, increment, updateDoc, query, orderBy } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { useAuth } from "./components/AuthContext";
+import { FaEye, FaFlag, FaPrayingHands, FaHeart, FaStar } from 'react-icons/fa';
 
-// SVG Icon Components for reactions
+// SVG/Icon Components for reactions
 const ReactionIcons = {
-  // American flag SVG for the first reaction
-  "🇺🇸": ({ className = "w-6 h-6" }) => (
-    <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="24" height="16" y="4" fill="#fff"/>
-      <rect width="24" height="2.29" y="4" fill="#B22234"/>
-      <rect width="24" height="2.29" y="8.58" fill="#B22234"/>
-      <rect width="24" height="2.29" y="13.16" fill="#B22234"/>
-      <rect width="9.6" height="8" x="0" y="4" fill="#3C3B6E"/>
-      <g fill="#fff">
-        <circle cx="1.5" cy="5.5" r="0.5"/>
-        <circle cx="3.5" cy="6.5" r="0.5"/>
-        <circle cx="1.5" cy="7.5" r="0.5"/>
-        <circle cx="3.5" cy="8.5" r="0.5"/>
-        <circle cx="5.5" cy="5.5" r="0.5"/>
-        <circle cx="7.5" cy="6.5" r="0.5"/>
-        <circle cx="5.5" cy="7.5" r="0.5"/>
-        <circle cx="7.5" cy="8.5" r="0.5"/>
-      </g>
-    </svg>
-  ),
-  "🙏": ({ className = "w-6 h-6" }) => (
-    <span className={className} role="img" aria-label="Prayer">🙏</span>
-  ),
-  "❤️": ({ className = "w-6 h-6" }) => (
-    <svg className={className} fill="currentColor" viewBox="0 0 24 24">
-      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-    </svg>
-  ),
-  "⭐️": ({ className = "w-6 h-6" }) => (
-    <svg className={className} fill="currentColor" viewBox="0 0 24 24">
-      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-    </svg>
-  )
+  flag: ({ className = "w-6 h-6" }) => <FaFlag className={className} />,
+  prayer: ({ className = "w-6 h-6" }) => <FaPrayingHands className={className} />,
+  love: ({ className = "w-6 h-6" }) => <FaHeart className={className} />,
+  star: ({ className = "w-6 h-6" }) => <FaStar className={className} />,
 };
 
 // Medal/Star icon for the Veteran Story header
@@ -58,7 +30,14 @@ const FlagIcon = ({ className = "w-5 h-5" }) => (
   </svg>
 );
 
-const EMOJIS = ["🇺🇸", "🙏", "❤️", "⭐️"];
+const REACTIONS = ["flag", "prayer", "love", "star"];
+const reactionLabels = { flag: "Flag", prayer: "Prayer", love: "Love", star: "Star" };
+const legacyReactionMappings = {
+  "\u{1F1FA}\u{1F1F8}": "flag",
+  "\u{1F64F}": "prayer",
+  "\u{2764}\u{FE0F}": "love",
+  "\u{2B50}\u{FE0F}": "star"
+};
 const MODERATOR_UID = "VFNN3G45mcaMAFFDmT3IwsZmWgp2"; // Actual moderator UID
 
 export default function StoryDetail() {
@@ -126,10 +105,10 @@ export default function StoryDetail() {
       const data = {};
       snap.forEach(doc => {
         const { emoji, userId } = doc.data();
-        if (emoji) {
-          data[emoji] = (data[emoji] || 0) + 1;
-          if (user && user.uid === userId) setUserReaction(emoji);
-        }
+        if (!emoji) return;
+        const normalized = legacyReactionMappings[emoji] || emoji;
+        data[normalized] = (data[normalized] || 0) + 1;
+        if (user && user.uid === userId) setUserReaction(normalized);
       });
       setReactions(data);
     });
@@ -183,6 +162,10 @@ export default function StoryDetail() {
     alert("Comment flagged for moderator review.");
   };
 
+  const goBack = () => {
+    navigate("/archive");
+  };
+
   if (loading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   if (!story) return <div className="min-h-screen flex items-center justify-center">Story not found.</div>;
 
@@ -206,7 +189,7 @@ export default function StoryDetail() {
       {/* Story Content */}
       <div className="px-6 py-12">
         <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8 border border-us-blue">
-          <button onClick={() => navigate(-1)} className="mb-4 text-us-blue flex items-center gap-2">
+          <button onClick={goBack} className="mb-4 text-us-white flex items-center gap-2 bg-us-red px-4 py-2 rounded-lg">
             <span className="text-2xl">←</span> Back
           </button>
           <div className="flex flex-col items-center gap-4">
@@ -219,40 +202,38 @@ export default function StoryDetail() {
             <div className="text-us-blue">{story.branch} {story.conflict && <>| {story.conflict}</>} {story.years && <>| Years: {story.years}</>} {story.location && <>| {story.location}</>}</div>
             
             {/* View Count Display */}
-            <div className="text-sm text-us-blue bg-us-white px-3 py-1 rounded-full border border-us-blue">
-              👁️ {formatViewCount(viewCount)}
+            <div className="text-sm text-us-blue bg-us-white px-3 py-1 rounded-full border border-us-blue flex items-center gap-1">
+              <FaEye className="w-4 h-4" /> {formatViewCount(viewCount)}
             </div>
             
             <div className="text-black text-lg whitespace-pre-line">{story.story}</div>
             <div className="flex gap-4 items-center mt-4">
-              {EMOJIS.map(emoji => (
+              {REACTIONS.map(reaction => (
                 <button 
-                  key={emoji} 
-                  onClick={() => handleReact(emoji)} 
+                  key={reaction} 
+                  onClick={() => handleReact(reaction)} 
                   className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors relative ${
-                    userReaction === emoji 
+                    userReaction === reaction 
                       ? 'bg-us-blue text-us-white border-2 border-us-blue' 
                       : 'bg-us-white text-us-blue border border-us-blue'
                   }`}
-                  title={emoji === "🇺🇸" ? "Flag" : emoji === "🙏" ? "Prayer" : emoji === "❤️" ? "Love" : "Star"}
+                  title={reactionLabels[reaction]}
                 >
-                  {ReactionIcons[emoji]({ className: "w-5 h-5" })}
-                  <span className="text-sm font-medium">
-                    {emoji === "🇺🇸" ? "Flag" : emoji === "🙏" ? "Prayer" : emoji === "❤️" ? "Love" : "Star"}
-                  </span>
+                  {ReactionIcons[reaction]({ className: "w-5 h-5" })}
+                  <span className="text-sm font-medium">{reactionLabels[reaction]}</span>
                   <span className="absolute -top-2 -right-2 bg-us-blue text-white text-xs font-bold rounded-full px-2 py-0.5 shadow">
-                    {reactions[emoji] || 0}
+                    {reactions[reaction] || 0}
                   </span>
                 </button>
               ))}
             </div>
             {user && (
               <button 
-                className="flex items-center gap-2 border border-red-500 text-red-600 rounded px-3 py-2 text-sm font-semibold transition-colors duration-150 hover:bg-red-50 hover:text-red-700 focus:outline-none focus:ring-2 focus:ring-red-400 ml-2" 
+                className="flex items-center gap-2 border border-red-500 bg-us-red text-us-white rounded px-3 py-2 text-sm font-semibold transition-colors duration-150 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 ml-2" 
                 onClick={flagStory}
                 title="Flag story for moderator review"
               >
-                <FlagIcon className="w-4 h-4" />
+                <FlagIcon className="w-4 h-4 text-us-white" />
                 Flag
               </button>
             )}
