@@ -367,7 +367,7 @@ export default function SubmitStory() {
                 <button
                   type="button"
                   onClick={handlePhotoUpload}
-                  className="bg-us-gold text-us-blue font-semibold px-4 py-2 rounded-lg shadow hover:bg-us-red hover:text-us-white transition"
+                  className="bg-us-gold text-white font-semibold px-4 py-2 rounded-lg shadow"
                 >
                   {photoURL ? "Change Photo" : "Upload Photo"}
                 </button>
