@@ -23,7 +23,7 @@ export default function Educator() {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState("profile");
-  const [speakerRequest, setSpeakerRequest] = useState({ name: "", email: "", details: "" });
+  const [speakerRequest, setSpeakerRequest] = useState({ name: "", email: "", school: "", details: "" });
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
 
@@ -112,6 +112,13 @@ export default function Educator() {
   const handleSpeakerRequest = async (e) => {
     e.preventDefault();
     setError("");
+
+    // Validate env vars
+    if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+      setError("Email service not properly configured. Please contact support.");
+      return;
+    }
+
     try {
       await emailjs.send(
         EMAILJS_SERVICE_ID,
@@ -119,14 +126,17 @@ export default function Educator() {
         {
           from_name: speakerRequest.name,
           from_email: speakerRequest.email,
+          school: speakerRequest.school,
           message: speakerRequest.details,
           to_email: import.meta.env.VITE_CONTACT_EMAIL,
         },
         EMAILJS_PUBLIC_KEY
       );
       setSubmitted(true);
+      setSpeakerRequest({ name: "", email: "", school: "", details: "" });
+      setTimeout(() => setSubmitted(false), 3000);
     } catch (err) {
-      setError("Failed to send request: " + err.text || err.message);
+      setError(`Failed to send request: ${err?.message || JSON.stringify(err)}`);
     }
   };
 
@@ -199,7 +209,7 @@ export default function Educator() {
             className={`px-6 py-2 rounded-lg font-semibold shadow transition-all duration-150 ${tab === "virtual" ? "bg-us-blue text-us-white scale-105" : "bg-us-white text-us-blue border border-us-blue"}`}
             onClick={() => setTab("virtual")}
           >
-            Request a Virtual Veteran
+            Request a Virtual Veteran Visit
           </button>
         </div>
 
@@ -223,29 +233,61 @@ export default function Educator() {
             <div className="bg-us-gold/90 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-us-blue flex flex-col gap-2">
               <h3 className="text-xl font-bold text-us-blue mb-2">Women in Service</h3>
               <p className="text-us-blue mb-2">Learn about the vital roles Iowa women played in military and civilian service, including the Women's Army Corps, WAVES, and the Cadet Nurse Corps, with a focus on WWII and beyond.</p>
-              <a href="https://www.nps.gov/articles/h-hour-history-lesson-home-front-experiences-and-contributions-by-women-in-service-in-waterloo-iowa-world-war-ii-heritage-city.htm" target="_blank" rel="noopener noreferrer" className="text-us-red underline font-semibold">NPS: Women in Service in Waterloo, Iowa (WWII)</a>
               <a href="https://www.iowapbs.org/iowapathways/artifact/1515/iowa-veterans-experience-womens-army-corps-wac-during-world-war-ii" target="_blank" rel="noopener noreferrer" className="text-us-red underline font-semibold">Iowa Veteran's Experience in the WAC (PBS)</a>
             </div>
             <div className="bg-us-gold/90 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-us-blue flex flex-col gap-2 md:col-span-2">
               <h3 className="text-xl font-bold text-us-blue mb-2">Medal of Honor Recipients</h3>
               <p className="text-us-blue mb-2">Discover Iowa's Medal of Honor recipients and access lesson plans, living histories, and character education resources from the Congressional Medal of Honor Society.</p>
               <a href="https://www.cmohs.org/lessons/resources" target="_blank" rel="noopener noreferrer" className="text-us-red underline font-semibold">Medal of Honor Society: Educator Resources</a>
-              <a href="https://www.fdmuseum.org/about-the-1st-infantry-division/medal-of-honor-recipients/2lt-robert-j-hibbs/" target="_blank" rel="noopener noreferrer" className="text-us-red underline font-semibold">Iowa Medal of Honor: Lt. Robert Hibbs (Vietnam)</a>
             </div>
           </div>
         )}
 
         {tab === "virtual" && (
           <div className="bg-us-gold/90 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-us-blue max-w-xl mx-auto">
-            <h3 className="text-2xl font-bold text-us-blue mb-4">Request a Virtual Veteran</h3>
+            <h3 className="text-2xl font-bold text-us-blue mb-4">Request a Virtual Veteran Visit</h3>
             <p className="text-us-blue mb-4">Fill out the form below to request a virtual veteran speaker for your classroom or event.</p>
-            <form className="flex flex-col gap-4">
-              <input type="text" className="w-full border border-us-blue rounded px-3 py-2 bg-us-white text-black placeholder-black" placeholder="Your Name" />
-              <input type="email" className="w-full border border-us-blue rounded px-3 py-2 bg-us-white text-black placeholder-black" placeholder="Your Email" />
-              <input type="text" className="w-full border border-us-blue rounded px-3 py-2 bg-us-white text-black placeholder-black" placeholder="School/Organization" />
-              <textarea className="w-full border border-us-blue rounded px-3 py-2 min-h-[100px] bg-us-white text-black placeholder-black" placeholder="Details about your request (date, grade level, topics, etc.)" />
-              <button type="submit" className="bg-us-blue text-us-white font-semibold px-6 py-2 rounded">Submit Request</button>
-            </form>
+            {submitted ? (
+              <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+                <p className="font-semibold">Thank you!</p>
+                <p>Your request has been submitted successfully. We will be in touch soon.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleSpeakerRequest} className="flex flex-col gap-4">
+                <input 
+                  type="text" 
+                  className="w-full border border-us-blue rounded px-3 py-2 bg-us-white text-black placeholder-black" 
+                  placeholder="Your Name"
+                  value={speakerRequest.name}
+                  onChange={(e) => setSpeakerRequest({...speakerRequest, name: e.target.value})}
+                  required
+                />
+                <input 
+                  type="email" 
+                  className="w-full border border-us-blue rounded px-3 py-2 bg-us-white text-black placeholder-black" 
+                  placeholder="Your Email"
+                  value={speakerRequest.email}
+                  onChange={(e) => setSpeakerRequest({...speakerRequest, email: e.target.value})}
+                  required
+                />
+                <input 
+                  type="text" 
+                  className="w-full border border-us-blue rounded px-3 py-2 bg-us-white text-black placeholder-black" 
+                  placeholder="School/Organization"
+                  value={speakerRequest.school}
+                  onChange={(e) => setSpeakerRequest({...speakerRequest, school: e.target.value})}
+                />
+                <textarea 
+                  className="w-full border border-us-blue rounded px-3 py-2 min-h-[100px] bg-us-white text-black placeholder-black" 
+                  placeholder="Details about your request (date, grade level, topics, etc.)"
+                  value={speakerRequest.details}
+                  onChange={(e) => setSpeakerRequest({...speakerRequest, details: e.target.value})}
+                  required
+                />
+                {error && <div className="text-red-600 text-sm">{error}</div>}
+                <button type="submit" className="bg-us-blue text-us-white font-semibold px-6 py-2 rounded">Submit Request</button>
+              </form>
+            )}
           </div>
         )}
       </div>
