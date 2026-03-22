@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Analytics } from '@vercel/analytics/react';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { FaUserGraduate, FaUserShield, FaShieldAlt, FaMedal, FaEye, FaTrash, FaFlag, FaPrayingHands, FaHeart } from 'react-icons/fa';
 import app from "./firebase";
 import AuthForm from "./components/AuthForm";
 import { auth, db, storage } from "./firebase";
@@ -20,101 +18,13 @@ import Moderator from "./Moderator";
 import { AuthProvider, useAuth } from "./components/AuthContext";
 import StyledLanding from "./StyledLanding";
 
-const CARD_ICON_COMPONENTS = [FaFlag, FaPrayingHands, FaHeart];
+const CARD_EMOJIS = ["🇺🇸", "🙏", "❤️"];
 
 const formatViewCount = (count) => {
   if (count === 0) return "No views yet";
   if (count === 1) return "1 view";
   return `${count} views`;
 };
-
-function StoryCard({
-  story,
-  storyId,
-  onNavigate,
-  onToggleBookmark,
-  isBookmarked = false,
-  onFlag,
-  commentCount = 0,
-  reactionCount = 0,
-}) {
-  const iconIndex = storyId?.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0) % CARD_ICON_COMPONENTS.length;
-  const Icon = CARD_ICON_COMPONENTS[iconIndex] || FaFlag;
-
-  return (
-    <div
-      className="bg-us-white/90 backdrop-blur-sm rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group border border-us-red relative"
-      onClick={() => onNavigate && onNavigate(`/archive/${storyId}`)}
-    >
-      <div className="w-full h-48 bg-us-blue flex items-center justify-center overflow-hidden">
-        {story.photoURL ? (
-          <img
-            src={story.photoURL}
-            alt={story.veteranName || "Veteran photo"}
-            className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
-          />
-        ) : (
-          <Icon className="w-16 h-16 text-us-white" />
-        )}
-      </div>
-      <div className="p-6">
-        <div className="font-bold text-2xl mb-2 text-us-red">{story.veteranName || "Anonymous Veteran"}</div>
-        <div className="text-lg text-us-blue mb-2">
-          {story.branch} {story.conflict && <>• {story.conflict}</>}
-        </div>
-        <div className="text-base text-us-blue mb-3">
-          {story.years && <>Years: {story.years}</>} {story.location && <>• {story.location}</>}
-        </div>
-        <div className="text-us-blue text-sm mb-4 line-clamp-3">{story.story}</div>
-        <div className="flex items-center justify-between">
-          <div className="flex gap-4 text-sm">
-            <span className="flex items-center gap-1 text-us-red font-semibold">
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M21.99 4c0-1.1-.89-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM18 14H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z" />
-              </svg>
-              {commentCount}
-            </span>
-            <span className="flex items-center gap-1 text-us-red font-semibold">
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-              </svg>
-              {reactionCount}
-            </span>
-            <span className="flex items-center gap-1 text-us-blue">
-              <FaEye className="w-4 h-4" /> {formatViewCount(story.viewCount || 0)}
-            </span>
-          </div>
-          <div className="flex gap-2">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onToggleBookmark && onToggleBookmark(storyId, story);
-              }}
-              className={`px-3 py-1 rounded-lg font-semibold transition ${
-                isBookmarked ? "bg-us-blue text-us-white" : "bg-us-white text-us-blue border border-us-blue"
-              }`}
-              title={isBookmarked ? "Remove bookmark" : "Add bookmark"}
-            >
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-              </svg>
-            </button>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onFlag && onFlag(storyId);
-              }}
-              className="px-3 py-1 rounded-lg bg-us-red text-us-white font-semibold"
-              title="Flag story"
-            >
-              Flag
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 function MainLayout({ children }) {
   return (
@@ -124,7 +34,7 @@ function MainLayout({ children }) {
         <div className="flex-1 flex flex-col">{children}</div>
       </main>
       <footer className="w-full left-0 bg-us-blue text-us-white text-center py-3 text-sm shadow-md z-50">
-        © 2026 Joey Zambreno. Created for the purpose of preserving and sharing the stories of Iowa's veterans.
+        © 2025 Joey Zambreno. Created for the purpose of preserving and sharing the stories of Iowa's veterans.
       </footer>
     </>
   );
@@ -159,33 +69,15 @@ function Home() {
         const storiesSnap = await getDocs(collection(db, "stories"));
         const usersSnap = await getDocs(collection(db, "users"));
         const lettersSnap = await getDocs(collection(db, "letters"));
-
+        
         const veteranUsers = usersSnap.docs
-          .map(doc => ({ id: doc.id, ...doc.data() }))
+          .map(doc => doc.data())
           .filter(user => user.role === "VETERAN");
-
-        const veteranIds = new Set(veteranUsers.map(user => user.id));
-
-        // Ensure letters count only includes letters for a veteran that still exists
-        let validLettersCount = 0;
-        for (const letterDoc of lettersSnap.docs) {
-          const letterData = letterDoc.data();
-          if (letterData && letterData.veteranUserId && veteranIds.has(letterData.veteranUserId)) {
-            validLettersCount += 1;
-          } else {
-            // Optionally prune orphan letter entries
-            try {
-              await deleteDoc(doc(db, "letters", letterDoc.id));
-            } catch (delErr) {
-              console.warn("Failed to prune orphan letter doc:", letterDoc.id, delErr);
-            }
-          }
-        }
 
         setStats({
           stories: storiesSnap.size,
           veterans: veteranUsers.length,
-          letters: validLettersCount
+          letters: lettersSnap.size
         });
       } catch (error) {
         console.error("Error fetching stats:", error);
@@ -201,10 +93,9 @@ function Home() {
       {/* Hero Section */}
       <div className="px-6 py-12 bg-us-blue text-us-white">
         <div className="max-w-6xl mx-auto text-center">
-          <div className="block text-6xl sm:text-7xl mb-4 flex items-center justify-center gap-3" aria-label="United States Flag and Medal">
-            <FaFlag className="w-14 h-14 text-us-red" aria-hidden="true" />
-            <FaMedal className="w-14 h-14 text-yellow-300" aria-hidden="true" />
-          </div>
+          <span className="block text-6xl sm:text-7xl mb-4 flex items-center justify-center gap-3" role="img" aria-label="United States Flag and Medal">
+            🇺🇸 <span className="text-5xl">🏅</span>
+          </span>
           <h1 className="text-4xl sm:text-5xl font-extrabold mb-4 drop-shadow text-us-white">IAHeroes</h1>
           <p className="text-xl sm:text-2xl text-us-white mb-8 max-w-3xl mx-auto">
             Preserving the stories of Iowa's veterans for future generations. 
@@ -251,17 +142,17 @@ function Home() {
           <h2 className="text-3xl font-bold text-center text-us-white mb-8">Quick Actions</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <Link to="/veteran" className="bg-us-blue rounded-xl p-6 shadow-lg text-center hover:bg-us-white transition-colors cursor-pointer group text-us-white">
-              <FaUserShield className="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform text-us-red" />
+              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">👨‍✈️</div>
               <div className="font-bold text-lg mb-2 text-us-blue">Veteran Portal</div>
               <div className="text-sm text-us-blue">Access your stories and connect with other veterans</div>
             </Link>
             <Link to="/educator" className="bg-us-blue rounded-xl p-6 shadow-lg text-center hover:bg-us-white transition-colors cursor-pointer group text-us-white">
-              <FaUserGraduate className="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform text-us-red" />
+              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">🎓</div>
               <div className="font-bold text-lg mb-2 text-us-blue">Educator Portal</div>
               <div className="text-sm text-us-blue">Access educational resources and request virtual veterans</div>
             </Link>
             <Link to="/moderator" className="bg-us-blue rounded-xl p-6 shadow-lg text-center hover:bg-us-white transition-colors cursor-pointer group text-us-white">
-              <FaShieldAlt className="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform text-us-red" />
+              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">🛡️</div>
               <div className="font-bold text-lg mb-2 text-us-blue">Moderator Portal</div>
               <div className="text-sm text-us-blue">Review, manage, and moderate user content</div>
             </Link>
@@ -276,21 +167,21 @@ function Home() {
             <h2 className="text-3xl font-bold text-center text-us-blue mb-8">Featured Stories</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {featuredStories.map((story, idx) => {
-                const iconIndex = story.id.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0) % CARD_ICON_COMPONENTS.length;
-                const Icon = CARD_ICON_COMPONENTS[iconIndex] || FaFlag;
+                const emoji = CARD_EMOJIS[story.id.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0) % CARD_EMOJIS.length];
                 return (
-                  <div key={story.id} className="bg-us-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow cursor-pointer" onClick={() => window.location.href = `/archive/${story.id}`}>
+                  <div key={story.id} className="bg-us-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow cursor-pointer" onClick={() => window.location.href = `/archive/${story.id}`}> 
                     <div className="w-full h-32 bg-us-white rounded mb-4 flex items-center justify-center overflow-hidden">
                       {story.photoURL ? (
                         <img src={story.photoURL} alt={story.veteranName || "Veteran photo"} className="object-cover w-full h-full" />
                       ) : (
-                        <Icon className="w-14 h-14 text-us-blue" />
+                        <span className="text-4xl">{emoji}</span>
                       )}
                     </div>
                     <div className="font-bold text-lg mb-2 text-us-blue">{story.veteranName || "Anonymous Veteran"}</div>
                     <div className="text-sm text-us-blue mb-3">{story.branch} {story.conflict && <>• {story.conflict}</>}</div>
                     <div className="text-us-blue text-sm line-clamp-3">{story.story}</div>
                     <div className="flex items-center justify-between mt-3">
+                      <div className="text-xs text-us-red">Submitted by: {story.submittedName || story.submittedBy || "Anonymous"}</div>
                       <div className="text-xs text-us-blue flex items-center gap-1">
                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
@@ -416,8 +307,6 @@ function Archive() {
         });
         setBookmarks(prev => ({ ...prev, [storyId]: true }));
       }
-
-      window.dispatchEvent(new Event('bookmarkCountChanged'));
     } catch (error) {
       console.error("Error toggling bookmark:", error);
       alert("Failed to update bookmark");
@@ -515,7 +404,7 @@ function Archive() {
                         )}
                       </div>
                       <div className="p-6">
-                        <div className="font-bold text-lg mb-2 cursor-pointer text-us-red hover:text-us-red transition-colors" onClick={() => window.location.href = `/archive/${story.id}`}>
+                        <div className="font-bold text-lg mb-2 cursor-pointer text-us-red" onClick={() => window.location.href = `/archive/${story.id}`}>
                           {story.veteranName || <span className="italic text-us-blue">Anonymous Veteran</span>}
                         </div>
                         <div className="text-sm text-us-blue mb-3 cursor-pointer" onClick={() => window.location.href = `/archive/${story.id}`}>
@@ -552,9 +441,12 @@ function Archive() {
                             onClick={(e) => {
                               e.stopPropagation();
                               toggleBookmark(story.id, story);
-                              window.dispatchEvent(new Event('bookmarkCountChanged'));
                             }}
-                            className="p-2 rounded-lg bg-us-blue text-us-white"
+                            className={`p-2 rounded-lg transition-colors ${
+                              bookmarks[story.id] 
+                                ? 'bg-us-blue text-us-white hover:bg-us-white' 
+                                : 'bg-us-blue text-us-white hover:bg-us-white hover:text-us-red'
+                            }`}
                             title={bookmarks[story.id] ? "Remove bookmark" : "Add bookmark"}
                           >
                             {bookmarks[story.id] ? (
@@ -650,7 +542,6 @@ function Bookmarks() {
     try {
       await deleteDoc(doc(db, "bookmarks", bookmarkId));
       setBookmarks(prev => prev.filter(bookmark => bookmark.id !== bookmarkId));
-      window.dispatchEvent(new Event('bookmarkCountChanged'));
     } catch (error) {
       console.error("Error removing bookmark:", error);
       alert("Failed to remove bookmark");
@@ -732,61 +623,55 @@ function Bookmarks() {
                 <h2 className="text-2xl font-bold text-us-blue mb-2">
                   Your Saved Stories ({bookmarks.length})
                 </h2>
-                <p className="text-us-blue">Click on any story to read more.</p>
+                <p className="text-us-blue">Click on any story to read more, or remove it from your bookmarks.</p>
               </div>
-              <div className="max-w-4xl mx-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {bookmarks.map((bookmark) => {
                   const story = bookmark.storyData;
-                  const storyId = story?.id || bookmark.storyId;
-                  if (!story || !storyId) return null;
-
+                  const storyId = story.id || bookmark.storyId;
+                  const emoji = CARD_EMOJIS[storyId?.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0) % CARD_EMOJIS.length] || "🇺🇸";
                   return (
-                    <div 
-                      key={bookmark.id} 
-                      className="mb-6 p-5 bg-us-white border-l-4 border-us-red rounded-lg shadow-md hover:shadow-lg transition-shadow relative group"
-                    >
-                      <div className="flex gap-4">
-                        <div 
-                          className="flex-1 cursor-pointer"
-                          onClick={() => window.location.href = `/archive/${storyId}`}
-                        >
-                          <h3 className="text-xl font-bold text-us-red mb-2">
-                            {story.veteranName || "Anonymous Veteran"}
-                          </h3>
-                          <div className="text-sm text-us-blue mb-2">
-                            {story.branch}
-                            {story.conflict && <span> • {story.conflict}</span>}
-                            {story.years && <span> • {story.years}</span>}
-                            {story.location && <span> • {story.location}</span>}
-                          </div>
-                          <p className="text-us-blue line-clamp-2 mb-3">
-                            {story.story}
-                          </p>
-                        </div>
-                        {story.photoURL && (
-                          <div 
-                            className="w-24 h-24 flex-shrink-0 rounded overflow-hidden cursor-pointer"
-                            onClick={() => window.location.href = `/archive/${storyId}`}
-                          >
-                            <img 
-                              src={story.photoURL} 
-                              alt={story.veteranName || "Veteran photo"} 
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
+                    <div key={bookmark.id} className="bg-us-white/90 backdrop-blur-sm rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group relative border border-us-red">
+                      <div className="w-full h-48 bg-us-red flex items-center justify-center overflow-hidden cursor-pointer" onClick={() => window.location.href = `/archive/${storyId}`}>
+                        {story.photoURL ? (
+                          <img src={story.photoURL} alt={story.veteranName || "Veteran photo"} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300" />
+                        ) : (
+                          <span className="text-6xl">{emoji}</span>
                         )}
+                      </div>
+                      <div className="p-6">
+                        <div className="font-bold text-lg mb-2 cursor-pointer text-us-blue" onClick={() => window.location.href = `/archive/${storyId}`}>
+                          {story.veteranName || <span className="italic text-us-blue">Anonymous Veteran</span>}
+                        </div>
+                        <div className="text-sm text-us-blue mb-3 cursor-pointer" onClick={() => window.location.href = `/archive/${storyId}`}>
+                          {story.branch} {story.conflict && <>• {story.conflict}</>}
+                        </div>
+                        <div className="text-sm text-us-blue mb-3 cursor-pointer" onClick={() => window.location.href = `/archive/${storyId}`}>
+                          {story.years && <>Years: {story.years}</>} {story.location && <>• {story.location}</>}
+                        </div>
+                        <div className="text-us-white text-sm mb-4 line-clamp-3 cursor-pointer" onClick={() => window.location.href = `/archive/${storyId}`}>
+                          {story.story}
+                        </div>
+                        <div className="text-xs text-us-blue cursor-pointer" onClick={() => window.location.href = `/archive/${storyId}`}>
+                          Submitted by: {story.submittedName || story.submittedBy || "Anonymous"}
+                        </div>
+                        <div className="flex items-center justify-between mt-3">
+                          <div className="flex gap-4 text-sm">
+                            <span className="flex items-center gap-1 text-us-blue">
+                              <span role="img" aria-label="Views">👁️</span> {formatViewCount(story.viewCount || 0)}
+                            </span>
+                          </div>
+                        </div>
                       </div>
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
                           removeBookmark(bookmark.id, storyId);
                         }}
-                        className="absolute top-3 right-3 bg-us-red text-us-white rounded-full p-2 shadow-lg hover:bg-red-700 transition-colors"
+                        className="absolute top-3 right-3 bg-us-white rounded-full p-2 shadow-lg hover:bg-us-red transition-colors z-10"
                         title="Remove from bookmarks"
                       >
-                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M16 9v10H8V9h8m-1.5-6h-5l-1 1H5v2h14V4h-3.5l-1-1z"/>
-                        </svg>
+                        <span className="text-us-red text-lg">🗑️</span>
                       </button>
                     </div>
                   );
@@ -987,7 +872,6 @@ export default function App() {
   return (
     <Router>
       <AuthProvider>
-        <Analytics />
         <Routes>
           <Route path="/" element={<StyledLanding />} />
           <Route path="/submit" element={<MainLayout><SubmitStory /></MainLayout>} />
