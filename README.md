@@ -5,6 +5,11 @@
 [![Firebase](https://img.shields.io/badge/Firebase-10.7.1-orange.svg)](https://firebase.google.com/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4.1-38B2AC.svg)](https://tailwindcss.com/)
 
+## 2025 Congressional App Challenge Winner!
+**Iowa's 3rd Congressional District**
+
+IAHeroes was selected as the winner of the 2025 Congressional App Challenge for Iowa's 3rd Congressional District. The Congressional App Challenge is a nationwide competition sponsored by Members of the U.S. House of Representatives that encourages students to create apps that solve real-world problems. 
+
 ## Overview
 
 IAHeroes is a comprehensive web platform dedicated to preserving and sharing the stories of Iowa's veterans. The application serves as a digital archive where veterans, their families, and community members can submit, explore, and interact with veteran stories, creating a lasting legacy for future generations.
@@ -206,8 +211,3 @@ These Python scripts use the Firebase Admin SDK and must be run locally with a s
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 2025 Congressional App Challenge Winner!
-**Iowa's 3rd Congressional District**
-
-IAHeroes was selected as the winner of the 2025 Congressional App Challenge for Iowa's 3rd Congressional District. The Congressional App Challenge is a nationwide competition sponsored by Members of the U.S. House of Representatives that encourages students to create apps that solve real-world problems. 
