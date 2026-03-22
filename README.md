@@ -139,18 +139,27 @@ The application will be available at `http://localhost:51xx`
 ## Project Structure
 
 ```
-IAHEROES_V2/
-├── frontend/                 # React frontend application
+IAHeroesCAC_FINAL/
+├── frontend/
+│   ├── public/                     # Static assets served at root
 │   ├── src/
-│   │   ├── components/      # Reusable React components
-│   │   ├── assets/         # Static assets
-│   │   ├── App.jsx         # Main application component
-│   │   ├── firebase.js     # Firebase configuration
-│   │   └── main.jsx        # Application entry point
-│   ├── public/             # Public assets
-│   └── package.json        # Frontend dependencies
-├── shared/                 # Shared utilities and types
-└── README.md              # Project documentation
+│   │   ├── components/             # Reusable React components (Navbar, etc.)
+│   │   ├── App.jsx                 # Root component and route definitions
+│   │   ├── StyledLanding.jsx       # Home page
+│   │   ├── StoryDetail.jsx         # Individual story view
+│   │   ├── SubmitStory.jsx         # Story submission form
+│   │   ├── ThankYouLetter.jsx      # Thank you letter form
+│   │   ├── Veteran.jsx             # Veteran portal
+│   │   ├── Educator.jsx            # Educator portal
+│   │   ├── Moderator.jsx           # Moderator portal
+│   │   ├── firebase.js             # Firebase initialization and config
+│   │   └── main.jsx                # App entry point
+│   ├── .env.example                # Environment variable template
+│   ├── vercel.json                 # Vercel SPA rewrite rules
+│   └── package.json
+├── delete_non_legit_stories.py     # Admin script: prune invalid stories
+├── delete_orphaned_bookmarks.py    # Admin script: prune orphaned bookmarks
+└── README.md
 ```
 
 ## Key Components
@@ -178,6 +187,14 @@ npm run build    # Build for production
 npm run preview  # Preview production build
 ```
 
+## Admin Scripts
+ 
+These Python scripts use the Firebase Admin SDK and must be run locally with a service account key:
+ 
+- **`delete_non_legit_stories.py`** - Removes stories that don't meet validity criteria
+- **`delete_orphaned_bookmarks.py`** - Cleans up bookmarks pointing to deleted stories
+- **`delete_illegitimate_accounts.py`** - Deletes all accounts that are not whitelisted
+
 ## Contributing
 
 1. Fork the repository
@@ -190,10 +207,7 @@ npm run preview  # Preview production build
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Author
+## 2025 Congressional App Challenge Winner!
+**Iowa's 3rd Congressional District**
 
-**Joey Zambreno**
-- Created for the purpose of preserving and sharing the stories of Iowa's veterans - made for the 2026 Congressional App Challenge Competition
-- Dedicated to honoring our heroes and their sacrifices
-
-**IAHeroes** - Preserving the legacy of Iowa's veterans, one story at a time.
+IAHeroes was selected as the winner of the 2025 Congressional App Challenge for Iowa's 3rd Congressional District. The Congressional App Challenge is a nationwide competition sponsored by Members of the U.S. House of Representatives that encourages students to create apps that solve real-world problems. 
