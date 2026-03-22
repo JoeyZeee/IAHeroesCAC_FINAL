@@ -239,8 +239,8 @@ export default function Moderator() {
                     </div>
                     <div className="flex gap-2 mt-2 md:mt-0">
                       {!u.banned
-                        ? <button className="bg-us-red text-us-white rounded px-3 py-1 text-xs font-semibold" onClick={() => banUser(u.id)}>Ban</button>
-                        : <button className="border border-us-red text-us-red rounded px-3 py-1 text-xs font-semibold" onClick={() => unbanUser(u.id)}>Unban</button>
+                        ? <button style={{backgroundColor: '#B22234', color: '#ffffff'}} className="rounded px-3 py-1 text-xs font-semibold" onClick={() => banUser(u.id)}>Ban</button>
+                        : <button style={{backgroundColor: '#ffffff', color: '#B22234', border: '1px solid #B22234'}} className="rounded px-3 py-1 text-xs font-semibold" onClick={() => unbanUser(u.id)}>Unban</button>
                       }
                       <button
                         className="bg-us-blue text-us-white rounded px-3 py-1 text-xs font-semibold"
