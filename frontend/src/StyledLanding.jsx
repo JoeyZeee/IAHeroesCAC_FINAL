@@ -161,19 +161,19 @@ function StyledLanding() {
         <h2 className="text-xl font-bold mb-4 text-us-blue">Get Started</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white rounded-xl shadow flex flex-col items-center p-6 feature-card">
-              <img src="/public/gs-archive.jpg" alt="Browse Archive" className="w-28 h-24 object-cover rounded-lg mb-4" />
+              <img src="/gs-archive.jpg" alt="Browse Archive" className="w-28 h-24 object-cover rounded-lg mb-4" />
               <div className="font-semibold mb-2" style={{ color: '#111' }}>Browse Archive</div>
               <div className="text-sm text-gray-500 mb-3 text-center">Explore a collection of preserved veteran stories.</div>
               <Link to="/archive" className="bg-us-blue text-us-white font-semibold px-4 py-2 rounded flex items-center gap-1" style={{ color: '#fff' }}>Browse <FaRegFileAlt color="#fff" /></Link>
             </div>
             <div className="bg-white rounded-xl shadow flex flex-col items-center p-6 feature-card">
-              <img src="/public/gs-submit.jpg" alt="Submit Story" className="w-28 h-24 object-cover rounded-lg mb-4" />
+              <img src="/gs-submit.jpg" alt="Submit Story" className="w-28 h-24 object-cover rounded-lg mb-4" />
               <div className="font-semibold mb-2" style={{ color: '#111' }}>Submit Stories</div>
               <div className="text-sm text-gray-500 mb-3 text-center">Share a veteran's story to honor their service.</div>
               <Link to="/submit" className="bg-us-blue text-us-white font-semibold px-4 py-2 rounded flex items-center gap-1" style={{ color: '#fff' }}>Submit <FaPen color="#fff" /></Link>
             </div>
             <div className="bg-white rounded-xl shadow flex flex-col items-center p-6 feature-card">
-              <img src="/public/gs-thanks.jpg" alt="Send Thanks" className="w-28 h-24 object-cover rounded-lg mb-4" />
+              <img src="/gs-thanks.jpg" /> alt="Send Thanks" className="w-28 h-24 object-cover rounded-lg mb-4" />
               <div className="font-semibold mb-2" style={{ color: '#111' }}>Send Thanks</div>
               <div className="text-sm text-gray-500 mb-3 text-center">Express gratitude to veterans through heartfelt letters.</div>
               <Link to="/thankyou" className="bg-us-blue text-us-white font-semibold px-4 py-2 rounded flex items-center gap-1" style={{ color: '#fff' }}>Send <FaHeart color="#fff" /></Link>
@@ -186,19 +186,19 @@ function StyledLanding() {
         <h2 className="text-xl font-bold mb-4 text-us-blue">Portal Access</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white rounded-xl shadow flex flex-col items-center p-6 portal-card">
-              <img src="/public/portal-veteran.jpg" alt="Veteran Portal" className="w-28 h-24 object-cover rounded-lg mb-4" />
+              <img src="/portal-veteran.jpg" alt="Veteran Portal" className="w-28 h-24 object-cover rounded-lg mb-4" />
               <div className="font-semibold mb-2" style={{ color: '#111' }}>Veteran Portal</div>
               <div className="text-sm text-gray-500 mb-3 text-center">Access resources and support for veterans.</div>
               <Link to="/veteran" className="bg-us-blue text-us-white font-semibold px-4 py-2 rounded flex items-center gap-1" style={{ color: '#fff' }}>Access <FaSearch color="#fff" /></Link>
             </div>
             <div className="bg-white rounded-xl shadow flex flex-col items-center p-6 portal-card">
-              <img src="/public/portal-educator.jpg" alt="Educator Portal" className="w-28 h-24 object-cover rounded-lg mb-4" />
+              <img src="/portal-educator.jpg" alt="Educator Portal" className="w-28 h-24 object-cover rounded-lg mb-4" />
               <div className="font-semibold mb-2" style={{ color: '#111' }}>Educator Portal</div>
               <div className="text-sm text-gray-500 mb-3 text-center">Educational materials for teaching about veterans.</div>
               <Link to="/educator" className="bg-us-blue text-us-white font-semibold px-4 py-2 rounded flex items-center gap-1" style={{ color: '#fff' }}>Access <FaGraduationCap color="#fff" /></Link>
             </div>
             <div className="bg-white rounded-xl shadow flex flex-col items-center p-6 portal-card">
-              <img src="/public/portal-moderator.jpg" alt="Moderator Portal" className="w-28 h-24 object-cover rounded-lg mb-4" />
+              <img src="/portal-moderator.jpg" alt="Moderator Portal" className="w-28 h-24 object-cover rounded-lg mb-4" />
               <div className="font-semibold mb-2" style={{ color: '#111' }}>Moderator Portal</div>
               <div className="text-sm text-gray-500 mb-3 text-center">Tools for managing and reviewing submitted stories.</div>
               <Link to="/moderator" className="bg-us-blue text-us-white font-semibold px-4 py-2 rounded flex items-center gap-1" style={{ color: '#fff' }}>Access <FaShieldAlt color="#fff" /></Link>
