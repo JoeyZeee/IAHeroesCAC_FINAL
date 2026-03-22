@@ -376,7 +376,7 @@ export default function AuthForm() {
                   onClick={handleGoogleSignIn}
                   className="w-full flex items-center justify-center gap-2 border border-us-blue py-3 rounded-lg font-semibold text-us-blue bg-us-white"
                 >
-                  <img src="/google.svg" alt="Google" className="w-6 h-6" />
+                  <img src="/Google.png" alt="Google" className="w-6 h-6" />
                   Sign in with Google
                 </button>
 
