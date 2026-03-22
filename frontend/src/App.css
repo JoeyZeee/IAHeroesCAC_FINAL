@@ -47,3 +47,15 @@
 .read-the-docs {
   color: #B22234;
 }
+
+/* Ensure red-background buttons/text are always white for consistent UI */
+.bg-us-red,
+.bg-red-500,
+.btn-red {
+  color: #ffffff !important;
+}
+
+.bg-us-red .text-us-blue,
+.bg-red-500 .text-us-blue {
+  color: #ffffff !important;
+}
