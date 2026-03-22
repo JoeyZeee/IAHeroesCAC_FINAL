@@ -447,7 +447,9 @@ function Archive() {
                                 ? 'bg-us-blue text-us-white hover:bg-us-white' 
                                 : 'bg-us-blue text-us-white hover:bg-us-white hover:text-us-red'
                             }`}
-                            title={bookmarks[story.id] ? "Remove bookmark" : "Add bookmark"}
+                            
+                            // Replace with:
+                            className="p-2 rounded-lg bg-us-blue text-us-white"
                           >
                             {bookmarks[story.id] ? (
                               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
