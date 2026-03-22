@@ -9,7 +9,7 @@ import { FaEye, FaFlag, FaPrayingHands, FaHeart, FaStar, FaThumbsUp } from 'reac
 const ReactionIcons = {
   prayer: ({ className = "w-6 h-6" }) => <FaPrayingHands className={className} />,
   love: ({ className = "w-6 h-6" }) => <FaHeart className={className} />,
-  support: ({ className = "w-6 h-6" }) => <FaThumbsUp className={className} />,
+  thumbsUp: ({ className = "w-6 h-6" }) => <FaThumbsUp className={className} />,
 };
 
 // Medal/Star icon for the Veteran Story header
@@ -28,13 +28,13 @@ const FlagIcon = ({ className = "w-5 h-5" }) => (
   </svg>
 );
 
-const REACTIONS = ["prayer", "love", "support"];
-const reactionLabels = { prayer: "Prayer", love: "Love", support: "Support" };
+const REACTIONS = ["prayer", "love", "thumbsUp"];
+const reactionLabels = { prayer: "Prayer", love: "Love", thumbsUp: "Thumbs Up" };
 const legacyReactionMappings = {
   //"\u{1F1FA}\u{1F1F8}": "flag",
   "\u{1F64F}": "prayer",
   "\u{2764}\u{FE0F}": "love",
-  "\u{1F44D}": "support"
+  "\u{1F44D}": "thumbsUp"
 };
 const MODERATOR_UID = "VFNN3G45mcaMAFFDmT3IwsZmWgp2"; // Actual moderator UID
 
